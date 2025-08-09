@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ダイチと学ぶ！あきらパパの「対話で学ぼう！HTML/CSS入門」- 図解まとめ</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Zen+Kaku+Gothic+New:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            /* A futuristic, clean gradient background */
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6, #a5b4fc);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Zen Kaku Gothic New', sans-serif;
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+
+    <div class="w-full max-w-5xl mx-auto">
+        <!-- Page Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-shadow">ダイチと学ぶ！あきらパパの「対話で学ぼう！HTML/CSS入門」</h1>
+            <p class="text-slate-300 text-lg md:text-xl">（2025年8月8日） 🔸 まとめ図解リンク集</p>
+             <p class="text-slate-400 text-xs mt-4">※文字起こしデータを元に作成しているため、誤字脱字や情報の誤りなども含まれている可能性があります。予めご了承ください。</p>
+        </header>
+
+        <!-- Main Content: Link Cards Grid -->
+        <main>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                
+                <!-- Card 1: Introduction -->
+                <a href="1-introduction-what-is-a-webpage.html" class="card-hover block bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-bold text-cyan-400 mb-2">第1話：Webページって何？</h2>
+                    <p class="text-slate-300">Webページが身近な「日記帳」と同じ構造であることを学び、HTMLの基本的な考え方を対話形式で理解します。サーバーやブラウザの役割も優しい例えで解説。</p>
+                </a>
+                
+                <!-- Card 2: HTML Structure -->
+                <a href="2-html-document-structure.html" class="card-hover block bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-bold text-cyan-400 mb-2">第2話：HTMLは文書の骨格</h2>
+                    <p class="text-slate-300">見出し(h1)、段落(p)、強調(strong)など、文書構造を作るための基本タグを学習。実際に自分の手でコードを書き、Webページが誕生する瞬間を体験します。</p>
+                </a>
+                
+                <!-- Card 3: CSS Basics -->
+                <a href="3-css-styling-basics.html" class="card-hover block bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-bold text-cyan-400 mb-2">第3話：CSSという魔法</h2>
+                    <p class="text-slate-300">「お人形の着せ替え」の例えでCSSの役割を学びます。color, font-size, background-colorを使い、HTMLの見た目を劇的に変化させる魔法を習得します。</p>
+                </a>
+
+                <!-- Card 4: First Webpage Project -->
+                <a href="4-project-first-webpage.html" class="card-hover block bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-bold text-cyan-400 mb-2">第4話：初めてのページ作成</h2>
+                    <p class="text-slate-300">リスト(ul, li)や画像(img)タグを学び、これまでの知識を総動員して、自分だけの自己紹介ページをゼロから完成させる実践プロジェクトです。</p>
+                </a>
+
+                <!-- Card 5: CSS Layout -->
+                <a href="5-css-layout-flexbox.html" class="card-hover block bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-bold text-cyan-400 mb-2">第5話：レイアウトの極意</h2>
+                    <p class="text-slate-300">単調な縦並びから脱却！divタグで要素をグループ化し、Flexboxを使って写真と文章を横に並べるなど、プロのような柔軟なページレイアウトを実現します。</p>
+                </a>
+                
+                <!-- Card 6: Survey Results -->
+                <a href="6-seminar-survey-results.html" class="card-hover block bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-6 shadow-lg">
+                    <h2 class="text-2xl font-bold text-cyan-400 mb-2">特別編：セミナー成果レポート</h2>
+                    <p class="text-slate-300">約70名が参加した本セミナーのアンケート結果を公開。参加者が得た学びや感動の声、学習効果の分析など、セミナーの熱量を体感できるレポートです。</p>
+                </a>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center mt-12">
+            <p class="text-slate-500 text-sm">&copy; 2025 MIRAICHI. All Rights Reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
 
