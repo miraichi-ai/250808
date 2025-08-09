@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>要素の配置とレイアウト - HTMLとCSSの魔法</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Kaisei+Decol&display=swap" rel="stylesheet">
+  
+  <!-- Mermaid.js の読み込み -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        securityLevel: 'loose', // emoji対応
+        fontFamily: '"Kaisei Decol", sans-serif',
+        themeVariables: {
+          primaryColor: '#4CAF50',
+          primaryTextColor: '#fff',
+          primaryBorderColor: '#E91E63',
+          lineColor: '#009688',
+          secondaryColor: '#FFC107',
+          tertiaryColor: '#FAFAFA'
+        },
+        flowchart: {
+          cornerRadius: 15,
+          curve: 'cardinal',
+          htmlLabels: true
+        }
+      });
+    });
+  </script>
+  
+  <style>
+    :root {
+      --main-color: #4CAF50;
+      --accent-1: #9575CD;
+      --accent-2: #FFC107;
+      --accent-3: #009688;
+      --accent-4: #E91E63;
+      --bg-color: #FAFAFA;
+      --text-color: #333;
+      --border-radius: 12px;
+      --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--main-color), var(--accent-3));
+      color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+    
+    h1 {
+      font-family: 'Kaisei Decol', serif;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    
+    section {
+      margin-bottom: 50px;
+      padding: 25px;
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+    
+    h2 {
+      color: var(--main-color);
+      border-bottom: 3px solid var(--main-color);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      font-family: 'Kaisei Decol', serif;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    h2::before {
+      content: '';
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+      background-color: var(--main-color);
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 3h18v18H3V3z'/%3E%3C/svg%3E");
+      mask-size: cover;
+    }
+    
+    h3 {
+      color: var(--accent-3);
+      margin: 25px 0 15px;
+      font-size: 1.4rem;
+      position: relative;
+      padding-left: 20px;
+    }
+    
+    h3::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      background-color: var(--accent-3);
+      border-radius: 50%;
+    }
+    
+    p {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+    
+    .key-point {
+      background-color: rgba(76, 175, 80, 0.1);
+      border-left: 5px solid var(--main-color);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+    
+    .key-point strong {
+      color: var(--main-color);
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .example {
+      background-color: rgba(149, 117, 205, 0.1);
+      border-left: 5px solid var(--accent-1);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+    
+    .example strong {
+      color: var(--accent-1);
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .metaphor {
+      background-color: rgba(255, 193, 7, 0.1);
+      border-left: 5px solid var(--accent-2);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+      position: relative;
+    }
+    
+    .metaphor strong {
+      color: var(--accent-2);
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    .metaphor::after {
+      content: '💡';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 2rem;
+    }
+    
+    .conclusion {
+      background-color: rgba(233, 30, 99, 0.1);
+      border-left: 5px solid var(--accent-4);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    }
+    
+    .conclusion strong {
+      color: var(--accent-4);
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    code {
+      font-family: monospace;
+      background-color: #f5f5f5;
+      padding: 2px 5px;
+      border-radius: 3px;
+      color: var(--accent-3);
+      font-size: 0.95em;
+    }
+    
+    pre {
+      background-color: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    
+    pre code {
+      background-color: transparent;
+      color: inherit;
+      padding: 0;
+      font-size: 1em;
+    }
+    
+    .code-comment {
+      color: #75715e;
+    }
+    
+    .html-tag {
+      color: #f92672;
+    }
+    
+    .property {
+      color: #66d9ef;
+    }
+    
+    .value {
+      color: #a6e22e;
+    }
+    
+    .string {
+      color: #e6db74;
+    }
+    
+    .demo {
+      border: 2px dashed var(--accent-3);
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: var(--border-radius);
+    }
+    
+    .demo-header {
+      color: var(--accent-3);
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .demo-header::before {
+      content: '👁️';
+      margin-right: 10px;
+    }
+    
+    .comparison {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .comparison > div {
+      flex: 1;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+    
+    .comparison h4 {
+      margin-bottom: 10px;
+      text-align: center;
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+    }
+    
+    .comparison .before h4 {
+      background-color: var(--accent-4);
+    }
+    
+    .comparison .after h4 {
+      background-color: var(--main-color);
+    }
+    
+    .mermaid {
+      margin: 30px 0;
+      text-align: center;
+    }
+    
+    .term {
+      color: var(--accent-1);
+      font-weight: bold;
+      position: relative;
+      cursor: help;
+      text-decoration: underline dotted;
+    }
+    
+    .term-explanation {
+      display: none;
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: white;
+      padding: 10px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      width: 200px;
+      z-index: 10;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      font-weight: normal;
+      text-align: center;
+    }
+    
+    .term:hover .term-explanation {
+      display: block;
+    }
+    
+    .icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+    
+    .flex-container {
+      display: flex;
+      margin: 20px 0;
+      gap: 10px;
+    }
+    
+    .flex-item {
+      padding: 20px;
+      background-color: rgba(76, 175, 80, 0.2);
+      border: 1px solid var(--main-color);
+      border-radius: 5px;
+      flex: 1;
+      text-align: center;
+    }
+    
+    .control-panel {
+      background-color: #f5f5f5;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+    }
+    
+    .control-panel button {
+      background-color: var(--accent-3);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .control-panel button:hover {
+      background-color: var(--main-color);
+    }
+    
+    .flex-demo {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      margin-top: 15px;
+    }
+    
+    #demo-container {
+      display: flex;
+      background-color: rgba(0, 150, 136, 0.1);
+      border: 2px solid var(--accent-3);
+      min-height: 150px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+    
+    .demo-item {
+      background-color: white;
+      border: 2px solid var(--accent-1);
+      padding: 20px;
+      margin: 5px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .code-display {
+      font-family: monospace;
+      background-color: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-top: 15px;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      background-color: var(--main-color);
+      color: white;
+      border-radius: var(--border-radius);
+    }
+    
+    @media (max-width: 768px) {
+      .comparison {
+        flex-direction: column;
+      }
+      
+      pre {
+        font-size: 0.9rem;
+      }
+      
+      .flex-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>要素の配置とレイアウト</h1>
+    <div class="subtitle">Webページ作りの第一歩 - Chapter 05</div>
+  </header>
+  
+  <section id="intro">
+    <h2>レイアウトの基本概念</h2>
+    
+    <div class="key-point">
+      <strong>🔑 ポイント</strong>
+      <p>HTMLとCSSのレイアウトとは、Webページ上の要素（文章や画像など）をどのように配置するかを決める技術です。適切なレイアウトは、情報を整理し、視覚的に魅力的なページを作るために不可欠です。</p>
+    </div>
+    
+    <p>Webページのレイアウトは、ただ要素を並べるだけではありません。それぞれの要素をどこに、どのように配置するかで、ページの印象や使いやすさが大きく変わります。</p>
+    
+    <div class="metaphor">
+      <strong>💡 例え話：お部屋の模様替え</strong>
+      <p>Webページのレイアウトは、お部屋の模様替えと同じです。ベッド、机、本棚をどう配置するかで、部屋の使いやすさや印象が変わるように、Webページ上の写真や文章の配置を変えることで、見やすさや印象がガラッと変わります。</p>
+    </div>
+    
+    <div class="mermaid">
+      flowchart TD
+        A[お部屋の模様替え] -->|同じ原理| B[Webページのレイアウト]
+        
+        subgraph "現実世界"
+        C[家具の配置] --> D[部屋の使いやすさ]
+        E[インテリアの選択] --> F[部屋の雰囲気]
+        end
+        
+        subgraph "Web世界"
+        G[要素の配置] --> H[ページの使いやすさ]
+        I[デザインの選択] --> J[ページの印象]
+        end
+        
+        A --> C
+        A --> E
+        B --> G
+        B --> I
+    </div>
+    
+    <h3>なぜレイアウトが重要なのか？</h3>
+    
+    <p>良いレイアウトは、以下のような効果をもたらします：</p>
+    
+    <ul>
+      <li>情報が見つけやすくなる</li>
+      <li>読みやすくなる</li>
+      <li>視覚的に魅力的になる</li>
+      <li>プロフェッショナルな印象を与える</li>
+      <li>ユーザーの注目を集める要素を強調できる</li>
+    </ul>
+    
+    <div class="conclusion">
+      <strong>まとめ</strong>
+      <p>レイアウトとは、Webページ上の要素をどのように配置するかを決める技術です。お部屋の模様替えと同様に、要素の配置を変えるだけで、ページの印象や使いやすさが大きく変わります。</p>
+    </div>
+  </section>
+  
+  <section id="problems">
+    <h2>レイアウトの問題点を認識する</h2>
+    
+    <div class="key-point">
+      <strong>🔑 ポイント</strong>
+      <p>初心者がHTMLで作るページは、要素が縦に積み重なった「縦長」のデザインになりがちです。これは単調で読みにくく、プロフェッショナルな印象を与えません。</p>
+    </div>
+    
+    <h3>従来の縦並びレイアウトの限界</h3>
+    
+    <p>HTMLの基本的な要素（見出し、段落、画像など）は、デフォルトでは「ブロック要素」となり、縦に積み重なります。これは、本の文章のようなシンプルな情報には適していますが、視覚的な魅力や情報の整理には限界があります。</p>
+    
+    <div class="comparison">
+      <div class="before">
+        <h4>縦並びの問題点</h4>
+        <ul>
+          <li>単調な見た目</li>
+          <li>情報の関連性が視覚的に分かりにくい</li>
+          <li>スクロールが多くなる</li>
+          <li>アマチュア感が出やすい</li>
+          <li>重要な情報とそうでない情報の区別がつきにくい</li>
+        </ul>
+      </div>
+      <div class="after">
+        <h4>適切なレイアウトの利点</h4>
+        <ul>
+          <li>視覚的な変化がある</li>
+          <li>関連情報をグループ化できる</li>
+          <li>情報の階層が明確になる</li>
+          <li>プロフェッショナルな印象を与える</li>
+          <li>重要な情報を目立たせられる</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="demo">
+      <div class="demo-header">縦並びと横並びの比較</div>
+      
+      <div class="mermaid">
+        flowchart TD
+          subgraph "縦並びレイアウト（改善前）"
+            A[タイトル] --> B[写真]
+            B --> C[自己紹介文]
+            C --> D[趣味リスト]
+          end
+          
+          subgraph "横並びレイアウト（改善後）"
+            E[タイトル] --> F[写真と自己紹介文]
+            F --> G[趣味リスト]
+            F1[写真] --- F2[自己紹介文]
+          end
+      </div>
+    </div>
+    
+    <div class="example">
+      <strong>具体例：太郎くんのページ</strong>
+      <p>太郎くんが最初に作ったページでは、タイトル、写真、自己紹介文、趣味リストがすべて縦に並んでいました。友達から「もうちょっとかっこよくできない？」という感想をもらいました。これは、単純な縦並びのレイアウトがプロフェッショナルな印象を与えないことを示しています。</p>
+    </div>
+    
+    <div class="conclusion">
+      <strong>まとめ</strong>
+      <p>単純な縦並びのレイアウトには限界があります。プロフェッショナルで見やすいWebページを作るには、要素を適切に配置し、関連する情報をグループ化する必要があります。</p>
+    </div>
+  </section>
+  
+  <section id="div">
+    <h2>divタグ：整理ボックスの魔法</h2>
+    
+    <div class="key-point">
+      <strong>🔑 ポイント</strong>
+      <p><span class="term">div要素<span class="term-explanation">Division（区分）の略で、HTMLの中で最も基本的なブロックレベル要素</span></span>は、関連する要素をグループ化するための「整理ボックス」として機能します。これにより、レイアウトの構造化と管理が容易になります。</p>
+    </div>
+    
+    <h3>divタグの基本</h3>
+    
+    <p>divタグは、HTML文書内の一部分を区切るためのタグです。自体には視覚的な効果はありませんが、CSSと組み合わせることで、レイアウトの基礎となります。</p>
+    
+    <pre><code><span class="html-tag">&lt;div&gt;</span>
+    <span class="code-comment"><!-- この中に関連する要素を入れます --></span>
+    <span class="html-tag">&lt;h2&gt;</span>見出し<span class="html-tag">&lt;/h2&gt;</span>
+    <span class="html-tag">&lt;p&gt;</span>段落のテキスト<span class="html-tag">&lt;/p&gt;</span>
+    <span class="html-tag">&lt;img</span> <span class="property">src</span>=<span class="string">"画像.jpg"</span> <span class="property">alt</span>=<span class="string">"画像の説明"</span><span class="html-tag">&gt;</span>
+<span class="html-tag">&lt;/div&gt;</span></code></pre>
+    
+    <div class="metaphor">
+      <strong>💡 例え話：お部屋の収納ボックス</strong>
+      <p>divタグは、お部屋の収納ボックスのようなものです。レゴのパーツをレゴ用のボックス、ゲームをゲーム用のボックスに分けて収納するように、関連するHTML要素をdivタグでグループ化することで、整理整頓ができます。</p>
+    </div>
+    
+    <div class="mermaid">
+      flowchart TD
+        A[収納ボックス] -->|Web版| B[divタグ]
+        
+        subgraph "お部屋の収納"
+        C[レゴ用ボックス] --> D[レゴのお城]
+        C --> E[レゴの車]
+        F[ゲーム用ボックス] --> G[サッカーゲーム]
+        F --> H[RPGゲーム]
+        end
+        
+        subgraph "HTML構造"
+        I["div（プロフィール用）"] --> J[写真]
+        I --> K[自己紹介文]
+        L["div（趣味用）"] --> M[見出し]
+        L --> N[リスト]
+        end
+    </div>
+    
+    <h3>classを使って名前をつける</h3>
+    
+    <p><span class="term">class属性<span class="term-explanation">HTML要素に名前（分類）をつけるための属性。CSSでスタイルを適用する際に使用します</span></span>を使うと、divタグに名前をつけることができます。これにより、CSSで特定のdivだけにスタイルを適用できるようになります。</p>
+    
+    <pre><code><span class="html-tag">&lt;div</span> <span class="property">class</span>=<span class="string">"プロフィール"</span><span class="html-tag">&gt;</span>
+    <span class="html-tag">&lt;img</span> <span class="property">src</span>=<span class="string">"太郎.jpg"</span> <span class="property">alt</span>=<span class="string">"太郎くんの写真"</span><span class="html-tag">&gt;</span>
+    <span class="html-tag">&lt;p&gt;</span>はじめまして！僕の名前は太郎です。<span class="html-tag">&lt;/p&gt;</span>
+<span class="html-tag">&lt;/div&gt;</span>
+
+<span class="html-tag">&lt;div</span> <span class="property">class</span>=<span class="string">"趣味"</span><span class="html-tag">&gt;</span>
+    <span class="html-tag">&lt;h2&gt;</span>好きなこと<span class="html-tag">&lt;/h2&gt;</span>
+    <span class="html-tag">&lt;ul&gt;</span>
+        <span class="html-tag">&lt;li&gt;</span>サッカー<span class="html-tag">&lt;/li&gt;</span>
+        <span class="html-tag">&lt;li&gt;</span>ゲーム<span class="html-tag">&lt;/li&gt;</span>
+    <span class="html-tag">&lt;/ul&gt;</span>
+<span class="html-tag">&lt;/div&gt;</span></code></pre>
+    
+    <div class="example">
+      <strong>具体例：太郎くんのページ構造化</strong>
+      <p>太郎くんのページでは、プロフィール部分（写真と自己紹介）と趣味部分を別々のdivタグでグループ化しました。これにより、プロフィール部分だけを横並びにするなど、部分ごとに異なるレイアウトを適用できるようになりました。</p>
+    </div>
+    
+    <div class="conclusion">
+      <strong>まとめ</strong>
+      <p>divタグは、関連する要素をグループ化するための「整理ボックス」です。class属性を使って名前をつけることで、CSSでスタイルを適用しやすくなります。整理整頓されたHTML構造は、複雑なレイアウトを作る基礎となります。</p>
+    </div>
+  </section>
+  
+  <section id="flex">
+    <h2>Flexbox：横並びの魔法</h2>
+    
+    <div class="key-point">
+      <strong>🔑 ポイント</strong>
+      <p><span class="term">Flexbox<span class="term-explanation">Flexible Box Layoutの略。要素を柔軟に配置するためのCSSレイアウトモデル</span></span>（<code>display: flex;</code>）は、要素を横並びにしたり、さまざまな方向に配置したりするための強力なCSSの機能です。これにより、複雑なレイアウトを簡単に作成できます。</p>
+    </div>
+    
+    <h3>Flexboxの基本</h3>
+    
+    <p>Flexboxを使用するには、親要素（コンテナ）に<code>display: flex;</code>を適用します。すると、その中の子要素（アイテム）が横並びになります。</p>
+    
+    <pre><code><span class="html-tag">&lt;style&gt;</span>
+<span class="property">.プロフィール</span> {
+    <span class="property">display</span>: <span class="value">flex</span>;
+}
+<span class="html-tag">&lt;/style&gt;</span></code></pre>
+    
+    <div class="metaphor">
+      <strong>💡 例え話：お部屋の家具配置</strong>
+      <p>Flexboxは、お部屋の家具を自由に配置するようなものです。ベッドと机を横に並べたり、本棚とテレビを均等に配置したりするように、Web上の要素を柔軟に配置できます。「flex」は「柔軟」という意味で、まさに要素を柔軟に配置できる魔法なのです。</p>
+    </div>
+    
+    <div class="demo">
+      <div class="demo-header">Flexboxの基本デモ</div>
+      
+      <div class="control-panel">
+        <button onclick="document.getElementById('demo-container').style.display = 'block'">横並び（display: flex）</button>
+        <button onclick="document.getElementById('demo-container').style.display = 'block'; document.getElementById('demo-container').style.flexDirection = 'column'">縦並び（flex-direction: column）</button>
+        <button onclick="document.getElementById('demo-container').style.justifyContent = 'center'">中央寄せ（justify-content: center）</button>
+        <button onclick="document.getElementById('demo-container').style.justifyContent = 'space-between'">均等配置（justify-content: space-between）</button>
+        <button onclick="document.getElementById('demo-container').style.flexDirection = 'row-reverse'">順番を逆に（flex-direction: row-reverse）</button>
+        <button onclick="document.getElementById('demo-container').style.alignItems = 'center'">縦方向中央（align-items: center）</button>
+        <button onclick="resetFlexDemo()">リセット</button>
+      </div>
+      
+      <div class="flex-demo">
+        <div id="demo-container">
+          <div class="demo-item">項目1</div>
+          <div class="demo-item">項目2</div>
+          <div class="demo-item">項目3</div>
+        </div>
+        
+        <div class="code-display" id="current-css">
+          .container {
+            display: flex;
+          }
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      function resetFlexDemo() {
+        const container = document.getElementById('demo-container');
+        container.style.display = 'flex';
+        container.style.flexDirection = 'row';
+        container.style.justifyContent = 'flex-start';
+        container.style.alignItems = 'stretch';
+        
+        document.getElementById('current-css').textContent = `
+.container {
+  display: flex;
+}`;
+      }
+      
+      document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.control-panel button');
+        buttons.forEach(button => {
+          button.addEventListener('click', function() {
+            const container = document.getElementById('demo-container');
+            let cssText = '.container {\n  display: ' + container.style.display + ';\n';
+            
+            if (container.style.flexDirection) {
+              cssText += '  flex-direction: ' + container.style.flexDirection + ';\n';
+            }
+            
+            if (container.style.justifyContent) {
+              cssText += '  justify-content: ' + container.style.justifyContent + ';\n';
+            }
+            
+            if (container.style.alignItems && container.style.alignItems !== 'stretch') {
+              cssText += '  align-items: ' + container.style.alignItems + ';\n';
+            }
+            
+            cssText += '}';
+            document.getElementById('current-css').textContent = cssText;
+          });
+        });
+      });
+    </script>
+    
+    <h3>Flexboxの主要なプロパティ</h3>
+    
+    <p>Flexboxには、要素の配置を細かく制御するためのさまざまなプロパティがあります。</p>
+    
+    <div class="flex-container">
+      <div class="flex-item">
+        <h4>justify-content</h4>
+        <p>横方向の配置を制御</p>
+        <ul>
+          <li>center（中央寄せ）</li>
+          <li>flex-start（左寄せ）</li>
+          <li>flex-end（右寄せ）</li>
+          <li>space-between（均等配置）</li>
+          <li>space-around（周囲に均等なスペース）</li>
+        </ul>
+      </div>
+      <div class="flex-item">
+        <h4>flex-direction</h4>
+        <p>並ぶ方向を制御</p>
+        <ul>
+          <li>row（横方向・左から右）</li>
+          <li>row-reverse（横方向・右から左）</li>
+          <li>column（縦方向・上から下）</li>
+          <li>column-reverse（縦方向・下から上）</li>
+        </ul>
+      </div>
+      <div class="flex-item">
+        <h4>align-items</h4>
+        <p>縦方向の配置を制御</p>
+        <ul>
+          <li>center（中央寄せ）</li>
+          <li>flex-start（上寄せ）</li>
+          <li>flex-end（下寄せ）</li>
+          <li>stretch（引き伸ばし）</li>
+          <li>baseline（ベースラインに合わせる）</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="mermaid">
+      flowchart TD
+        A[Flexbox] --> B[コンテナのプロパティ]
+        A --> C[アイテムのプロパティ]
+        
+        B --> D[display: flex]
+        B --> E[flex-direction]
+        B --> F[justify-content]
+        B --> G[align-items]
+        
+        E --> E1[row]
+        E --> E2[row-reverse]
+        E --> E3[column]
+        E --> E4[column-reverse]
+        
+        F --> F1[center]
+        F --> F2[flex-start]
+        F --> F3[flex-end]
+        F --> F4[space-between]
+        F --> F5[space-around]
+        
+        G --> G1[center]
+        G --> G2[flex-start]
+        G --> G3[flex-end]
+        G --> G4[stretch]
+        
+        C --> H[flex]
+        C --> I[align-self]
+        C --> J[order]
+    </div>
+    
+    <div class="example">
+      <strong>具体例：太郎くんのプロフィールレイアウト</strong>
+      <p>太郎くんのページでは、プロフィール部分（写真と自己紹介）を横並びにするために、<code>display: flex;</code>を使用しました。さらに、<code>justify-content: center;</code>を追加して中央寄せにしたり、<code>flex-direction: row-reverse;</code>を使って写真を右側に配置したりすることで、レイアウトのバリエーションを増やしました。</p>
+    </div>
+    
+    <h3>太郎くんのページコード</h3>
+    
+    <pre><code><span class="html-tag">&lt;!DOCTYPE html&gt;</span>
+<span class="html-tag">&lt;html&gt;</span>
+<span class="html-tag">&lt;head&gt;</span>
+    <span class="html-tag">&lt;title&gt;</span>太郎のページ<span class="html-tag">&lt;/title&gt;</span>
+    <span class="html-tag">&lt;style&gt;</span>
+        <span class="property">body</span> {
+            <span class="property">background-color</span>: <span class="value">lightgreen</span>;
+            <span class="property">margin</span>: <span class="value">40px</span>;
+        }
+        
+        <span class="property">h1</span> {
+            <span class="property">color</span>: <span class="value">darkgreen</span>;
+            <span class="property">font-size</span>: <span class="value">36px</span>;
+        }
+        
+        <span class="property">.プロフィール</span> {
+            <span class="property">display</span>: <span class="value">flex</span>;
+            <span class="property">justify-content</span>: <span class="value">center</span>;
+        }
+        
+        <span class="property">.プロフィール img</span> {
+            <span class="property">width</span>: <span class="value">150px</span>;
+            <span class="property">height</span>: <span class="value">150px</span>;
+        }
+        
+        <span class="property">p</span> {
+            <span class="property">color</span>: <span class="value">darkgreen</span>;
+            <span class="property">font-size</span>: <span class="value">18px</span>;
+        }
+        
+        <span class="property">h2</span> {
+            <span class="property">color</span>: <span class="value">darkgreen</span>;
+            <span class="property">font-size</span>: <span class="value">24px</span>;
+        }
+        
+        <span class="property">ul</span> {
+            <span class="property">color</span>: <span class="value">darkgreen</span>;
+            <span class="property">font-size</span>: <span class="value">18px</span>;
+        }
+    <span class="html-tag">&lt;/style&gt;</span>
+<span class="html-tag">&lt;/head&gt;</span>
+<span class="html-tag">&lt;body&gt;</span>
+    <span class="html-tag">&lt;h1&gt;</span>太郎のページ<span class="html-tag">&lt;/h1&gt;</span>
+    
+    <span class="html-tag">&lt;div</span> <span class="property">class</span>=<span class="string">"プロフィール"</span><span class="html-tag">&gt;</span>
+        <span class="html-tag">&lt;img</span> <span class="property">src</span>=<span class="string">"https://via.placeholder.com/150x150/90EE90/000000?text=太郎"</span> <span class="property">alt</span>=<span class="string">"太郎くんの写真"</span><span class="html-tag">&gt;</span>
+        <span class="html-tag">&lt;div&gt;</span>
+            <span class="html-tag">&lt;p&gt;</span>はじめまして！<span class="html-tag">&lt;/p&gt;</span>
+            <span class="html-tag">&lt;p&gt;</span>僕の名前は太郎です。<span class="html-tag">&lt;/p&gt;</span>
+            <span class="html-tag">&lt;p&gt;</span>中学2年生です。<span class="html-tag">&lt;/p&gt;</span>
+        <span class="html-tag">&lt;/div&gt;</span>
+    <span class="html-tag">&lt;/div&gt;</span>
+    
+    <span class="html-tag">&lt;div</span> <span class="property">class</span>=<span class="string">"趣味"</span><span class="html-tag">&gt;</span>
+        <span class="html-tag">&lt;h2&gt;</span>好きなこと<span class="html-tag">&lt;/h2&gt;</span>
+        <span class="html-tag">&lt;ul&gt;</span>
+            <span class="html-tag">&lt;li&gt;</span>サッカー<span class="html-tag">&lt;/li&gt;</span>
+            <span class="html-tag">&lt;li&gt;</span>ゲーム<span class="html-tag">&lt;/li&gt;</span>
+            <span class="html-tag">&lt;li&gt;</span>読書<span class="html-tag">&lt;/li&gt;</span>
+        <span class="html-tag">&lt;/ul&gt;</span>
+    <span class="html-tag">&lt;/div&gt;</span>
+<span class="html-tag">&lt;/body&gt;</span>
+<span class="html-tag">&lt;/html&gt;</span></code></pre>
+    
+    <div class="conclusion">
+      <strong>まとめ</strong>
+      <p>Flexbox（<code>display: flex;</code>）は、要素を横並びにしたり、さまざまな方向に配置したりするための強力なCSS機能です。<code>justify-content</code>や<code>flex-direction</code>などのプロパティを使うことで、レイアウトを細かく制御できます。これにより、プロフェッショナルなデザインが簡単に実現できるようになります。</p>
+    </div>
+  </section>
+  
+  <section id="summary">
+    <h2>レイアウトの魔法まとめ</h2>
+    
+    <div class="key-point">
+      <strong>🔑 ポイント</strong>
+      <p>適切なレイアウトは、Webページの印象と使いやすさを大きく向上させます。divタグとFlexboxの組み合わせは、モダンなWebデザインの基礎となります。</p>
+    </div>
+    
+    <h3>今日覚えた魔法の言葉</h3>
+    
+    <div class="flex-container">
+      <div class="flex-item">
+        <h4>div</h4>
+        <p>関連する要素をまとめる整理ボックス</p>
+      </div>
+      <div class="flex-item">
+        <h4>class</h4>
+        <p>整理ボックスにつける名札</p>
+      </div>
+      <div class="flex-item">
+        <h4>display: flex</h4>
+        <p>要素を横に並べる魔法</p>
+      </div>
+      <div class="flex-item">
+        <h4>justify-content</h4>
+        <p>横方向の配置を決める魔法</p>
+      </div>
+      <div class="flex-item">
+        <h4>flex-direction</h4>
+        <p>並ぶ方向を決める魔法</p>
+      </div>
+    </div>
+    
+    <div class="mermaid">
+      flowchart LR
+        A[レイアウトの問題] --> B[divタグで整理]
+        B --> C[Flexboxで横並び]
+        C --> D[プロっぽいデザイン]
+        
+        style A fill:#E91E63,color:#fff
+        style B fill:#4CAF50,color:#fff
+        style C fill:#9575CD,color:#fff
+        style D fill:#FFC107,color:#fff
+    </div>
+    
+    <div class="metaphor">
+      <strong>💡 最終的な例え話</strong>
+      <p>Webページのレイアウトは、お部屋の模様替えのようなものです。divタグは収納ボックスで、関連するものをまとめて整理します。Flexboxは家具の配置術で、要素を自由自在に配置できます。これらを組み合わせることで、「ごちゃごちゃした部屋」から「整理された、居心地の良い部屋」へと変化させることができるのです。</p>
+    </div>
+    
+    <div class="conclusion">
+      <strong>まとめと次のステップ</strong>
+      <p>レイアウトの基本を学んだことで、プロフェッショナルなWebページデザインへの第一歩を踏み出しました。divタグで要素を整理し、Flexboxで自由に配置することで、見やすく魅力的なページを作れるようになりました。次のステップでは、色とフォントを使って、さらに美しいデザインを作る方法を学んでいきましょう。</p>
+    </div>
+  </section>
+  
+  <footer>
+    <p>あきらパパの「対話で学ぼう！HTML/CSS入門」- Webページ作りの第一歩</p>
+    <p>Chapter 05: 要素の配置とレイアウト【div, margin, padding, display】</p>
+  </footer>
+</body>
+</html>

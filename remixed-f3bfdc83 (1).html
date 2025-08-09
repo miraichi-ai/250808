@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>あきらパパの「対話で学ぼう！HTML/CSS入門」- Webページ作りの第一歩</title>
+  
+  <!-- Mermaid.js の読み込み -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        securityLevel: 'loose', // emoji対応
+        fontFamily: 'sans-serif',
+        themeVariables: {
+          primaryColor: '#4CAF50',
+          primaryTextColor: '#fff',
+          primaryBorderColor: '#E91E63',
+          lineColor: '#009688',
+          secondaryColor: '#FFC107',
+          tertiaryColor: '#9575CD'
+        },
+        flowchart: {
+          cornerRadius: 15,
+          curve: 'cardinal',
+          htmlLabels: true
+        }
+      });
+    });
+  </script>
+  
+  <style>
+    :root {
+      --main-color: #4CAF50;
+      --accent-1: #9575CD;
+      --accent-2: #FFC107;
+      --accent-3: #009688;
+      --accent-4: #E91E63;
+      --bg-color: #FAFAFA;
+      --text-color: #333333;
+      --light-gray: #EEEEEE;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid var(--main-color);
+      padding-bottom: 20px;
+    }
+    
+    h1 {
+      color: var(--main-color);
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    
+    h2 {
+      color: var(--accent-3);
+      font-size: 2rem;
+      margin: 30px 0 15px;
+      border-left: 6px solid var(--accent-3);
+      padding-left: 15px;
+    }
+    
+    h3 {
+      color: var(--accent-1);
+      font-size: 1.5rem;
+      margin: 25px 0 15px;
+    }
+    
+    h4 {
+      color: var(--accent-2);
+      font-size: 1.3rem;
+      margin: 20px 0 10px;
+    }
+    
+    p {
+      margin-bottom: 15px;
+    }
+    
+    .emoji {
+      font-size: 1.4em;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+    
+    .toc {
+      background-color: var(--light-gray);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      margin-bottom: 30px;
+    }
+    
+    .toc h3 {
+      margin-top: 0;
+    }
+    
+    .toc ul {
+      list-style-type: none;
+      padding-left: 20px;
+    }
+    
+    .toc li {
+      margin-bottom: 8px;
+    }
+    
+    .toc a {
+      color: var(--accent-3);
+      text-decoration: none;
+    }
+    
+    .toc a:hover {
+      text-decoration: underline;
+    }
+    
+    .chapter {
+      background-color: white;
+      padding: 25px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin-bottom: 30px;
+    }
+    
+    .section {
+      margin-bottom: 25px;
+    }
+    
+    .dialogue {
+      background-color: var(--light-gray);
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+    }
+    
+    .akira, .taro {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: var(--border-radius);
+    }
+    
+    .akira {
+      background-color: rgba(76, 175, 80, 0.1);
+      border-left: 4px solid var(--main-color);
+    }
+    
+    .taro {
+      background-color: rgba(149, 117, 205, 0.1);
+      border-left: 4px solid var(--accent-1);
+    }
+    
+    .speaker {
+      font-weight: bold;
+      color: var(--accent-4);
+    }
+    
+    .highlight-box {
+      background-color: rgba(255, 193, 7, 0.1);
+      border: 1px solid var(--accent-2);
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin: 20px 0;
+    }
+    
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    .comparison-table th, .comparison-table td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    
+    .comparison-table th {
+      background-color: var(--accent-3);
+      color: white;
+    }
+    
+    .comparison-table tr:nth-child(even) {
+      background-color: var(--light-gray);
+    }
+    
+    .note {
+      background-color: rgba(0, 150, 136, 0.1);
+      border-left: 4px solid var(--accent-3);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: var(--border-radius);
+    }
+    
+    .tech-term {
+      color: var(--accent-4);
+      font-weight: bold;
+      position: relative;
+      cursor: help;
+    }
+    
+    .tech-term::after {
+      content: "🔍";
+      font-size: 0.8em;
+      vertical-align: super;
+      margin-left: 2px;
+    }
+    
+    .tech-explanation {
+      display: block;
+      font-size: 0.9em;
+      color: var(--accent-3);
+      background-color: rgba(0, 150, 136, 0.05);
+      padding: 10px;
+      border-radius: var(--border-radius);
+      margin: 5px 0 15px 20px;
+      border-left: 2px dashed var(--accent-3);
+    }
+    
+    .code-example {
+      background-color: #282c34;
+      color: #abb2bf;
+      padding: 15px;
+      border-radius: var(--border-radius);
+      font-family: monospace;
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    
+    .code-tag {
+      color: #e06c75;
+    }
+    
+    .code-attribute {
+      color: #d19a66;
+    }
+    
+    .code-value {
+      color: #98c379;
+    }
+    
+    .diagram-container {
+      margin: 30px 0;
+      padding: 20px;
+      background-color: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+    
+    .step {
+      display: flex;
+      margin-bottom: 15px;
+    }
+    
+    .step-number {
+      background-color: var(--accent-2);
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    
+    .step-content {
+      flex-grow: 1;
+    }
+    
+    .progress-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0;
+    }
+    
+    .progress-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+    
+    .progress-step::before {
+      content: "";
+      height: 2px;
+      background-color: var(--light-gray);
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      z-index: 1;
+    }
+    
+    .progress-step:first-child::before {
+      left: 50%;
+    }
+    
+    .progress-step:last-child::before {
+      right: 50%;
+    }
+    
+    .progress-dot {
+      width: 30px;
+      height: 30px;
+      background-color: var(--light-gray);
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .progress-dot.active {
+      background-color: var(--main-color);
+    }
+    
+    .progress-label {
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+    
+    .ascii-art {
+      font-family: monospace;
+      white-space: pre;
+      line-height: 1.2;
+      font-size: 0.9em;
+      margin: 15px 0;
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 2px solid var(--main-color);
+      color: var(--text-color);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>あきらパパの「対話で学ぼう！HTML/CSS入門」</h1>
+    <p>Webページ作りの第一歩</p>
+  </header>
+
+  <div class="toc">
+    <h3>📚 講座内容</h3>
+    <ul>
+      <li><a href="#chapter01">01 Webページって何？【HTML基礎理解】</a></li>
+      <li>02 HTMLって実は文書の構造なんです【h1, p, img, ul, li】</li>
+      <li>03 CSSって見た目を決める魔法です【color, font-size, background】</li>
+      <li>04 実際に初めてのページを作ろう【html, head, body, title】</li>
+      <li>05 要素の配置とレイアウト【div, margin, padding, display】</li>
+      <li>06 色とフォントで魅力的に【color, font-family, text-align】</li>
+      <li>07 スマホにも対応させよう【viewport, media-query, flex】</li>
+      <li>08 フォームとボタンを作ろう【form, input, button, label】</li>
+      <li>09 ナビゲーションと使いやすいページ構成【nav, a, header, footer】</li>
+      <li>10 アニメーションと動きのあるデザイン【transition, transform, hover】</li>
+      <li>11 実践プロジェクト：完全なWebサイト作成【総まとめ】</li>
+      <li>12 もっと美しく、もっと使いやすく【次のステップへ】</li>
+    </ul>
+  </div>
+
+  <div class="chapter" id="chapter01">
+    <h2>01 Webページって何？【HTML基礎理解】</h2>
+    <p class="chapter-date">2025.06.16に更新</p>
+
+    <div class="toc">
+      <h3>このチャプターの目次</h3>
+      <ul>
+        <li><a href="#section1">Webページって何？ - デジタル世界の入り口を理解しよう</a></li>
+        <li><a href="#section2">今日の始まり</a></li>
+        <li><a href="#section3">Webページって実は「デジタルの日記帳」なんです</a></li>
+        <li><a href="#section4">作文とHTMLの関係</a></li>
+        <li><a href="#section5">作文のルール → HTMLのルール</a></li>
+        <li><a href="#section6">どうやってみんなに見せるの？</a></li>
+        <li><a href="#section7">年賀状の流れ → Webページの流れ</a></li>
+        <li><a href="#section8">どんな機械でも見れる不思議</a></li>
+        <li><a href="#section9">太郎くんの1週間後</a></li>
+        <li><a href="#section10">これからの楽しい学習計画</a></li>
+        <li><a href="#section11">学習の冒険ストーリー</a></li>
+        <li><a href="#section12">始める前の準備</a></li>
+        <li><a href="#section13">太郎くんの道具箱</a></li>
+        <li><a href="#section14">心配なことはありませんか？</a></li>
+        <li><a href="#section15">今日の大発見！</a></li>
+        <li><a href="#section16">今日の太郎くんの成長</a></li>
+        <li><a href="#section17">今日覚えた大切な言葉</a></li>
+      </ul>
+    </div>
+
+    <div class="section" id="section1">
+      <h3>Webページって何？ - デジタル世界の入り口を理解しよう</h3>
+      <p>
+        インターネット上に表示される文書やコンテンツのことを<span class="tech-term">Webページ</span>と呼びます。
+        <span class="tech-explanation">
+          Webページ（Web page）: インターネットブラウザで閲覧できる文書やコンテンツのことです。文字、画像、動画などを含み、HTMLという言語で書かれています。「Web」は「蜘蛛の巣」を意味し、ページ同士がリンクで繋がっている様子を表しています。
+        </span>
+      </p>
+    </div>
+
+    <div class="section" id="section2">
+      <h3><span class="emoji">👥</span> 今日の始まり</h3>
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> あきらパパ、今度はWebページの作り方を教えてもらえるんですよね？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> はい！前回のGitで基本的なファイル管理はできるようになったので、今度は実際にWebページを作ってみましょうか。
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> わあ、ついに！でも、そもそもWebページって何なんですか？普段見てるサイトがどうやって作られてるのか、全然想像がつかなくて...
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> とてもいい質問ですね。実は、Webページって太郎くんが毎日書いてる日記帳みたいなものなんですよ。
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> えっ、日記帳ですか？
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section3">
+      <h3><span class="emoji">📔</span> Webページって実は「デジタルの日記帳」なんです</h3>
+      <h4>日記帳で考えてみよう</h4>
+      <div class="dialogue">
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> 太郎くんは学校で作文を書いたり、日記を書いたりしますよね？
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> はい！夏休みの日記とか、読書感想文とか。
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> その日記や作文には、どんなものが入ってますか？
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> えーっと...タイトルがあって、日付があって、本文があって...あ、時々絵も描きます！
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> そう！それがまさにWebページなんです。
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <h4>📔 太郎くんの日記とWebページの構造比較</h4>
+        <div class="ascii-art">
+┌─────────────────┐    ┌─────────────────┐
+│ 7月15日　　　　　　　│ ← タイトル    │ マイブログ           │ ← タイトル
+│「夏祭りに行ったよ」　│              ├─────────────────┤
+├─────────────────┤              │ 今日の出来事         │ ← 本文
+│ 今日は家族で夏祭り  │ ← 本文      │ 美味しいレストラン   │
+│ に行きました。       │              │ に行ってきました！   │
+│ 綿あめが美味しかった │              │                      │
+│ です。               │              │ [料理の写真]         │ ← 画像
+│                      │              └─────────────────┘
+│ [お祭りの絵]         │ ← 絵（画像）
+└─────────────────┘
+        </div>
+      </div>
+
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> 本当だ！構造が似てますね！
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> そうなんです！だから、文章が書ける人なら、誰でもWebページが作れるんですよ。
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section4">
+      <h3><span class="emoji">✏️</span> 作文とHTMLの関係</h3>
+      <h4>作文の書き方ルールを思い出してみよう</h4>
+      <div class="dialogue">
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> 太郎くんが作文を書く時、どんなルールがありますか？
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> えーっと...タイトルは大きく書いて、段落を分けて、大事なところは線を引いたり...
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> 素晴らしい！それがまさに<span class="tech-term">HTML</span>の考え方なんです。
+          <span class="tech-explanation">
+            HTML（HyperText Markup Language）: Webページを作るための基本的な言語です。「マークアップ言語」と呼ばれ、テキストに「これは見出し」「これは段落」などの印（マーク）をつけていきます。「ハイパーテキスト」とは、リンクを通じて別のテキストにジャンプできる仕組みのことです。
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section5">
+      <h3><span class="emoji">📝</span> 作文のルール → HTMLのルール</h3>
+      <table class="comparison-table">
+        <tr>
+          <th>作文</th>
+          <th>HTML</th>
+          <th>意味</th>
+        </tr>
+        <tr>
+          <td>太い字で大きくタイトル</td>
+          <td><code>&lt;h1&gt;タイトル&lt;/h1&gt;</code></td>
+          <td>大見出し（heading 1の略）</td>
+        </tr>
+        <tr>
+          <td>段落を分ける</td>
+          <td><code>&lt;p&gt;文章&lt;/p&gt;</code></td>
+          <td>段落（paragraphの略）</td>
+        </tr>
+        <tr>
+          <td>大事な部分に線を引く</td>
+          <td><code>&lt;strong&gt;大事&lt;/strong&gt;</code></td>
+          <td>強調（強い強調を意味する）</td>
+        </tr>
+        <tr>
+          <td>写真を貼る</td>
+          <td><code>&lt;img src="写真.jpg"&gt;</code></td>
+          <td>画像（imageの略、srcは出典元を指定）</td>
+        </tr>
+      </table>
+
+      <h4>実際にHTMLを見てみよう！</h4>
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> HTMLってどんな感じなんですか？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> 実は、とってもシンプルなんです。太郎くんの日記をHTMLで書くとこんな感じ：
+        </div>
+      </div>
+
+      <div class="code-example">
+<span class="code-tag">&lt;h1&gt;</span>夏祭りに行ったよ<span class="code-tag">&lt;/h1&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>今日は家族で夏祭りに行きました。<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;p&gt;</span>綿あめが美味しかったです。<span class="code-tag">&lt;/p&gt;</span>
+<span class="code-tag">&lt;img</span> <span class="code-attribute">src=</span><span class="code-value">"お祭りの写真.jpg"</span><span class="code-tag">&gt;</span>
+      </div>
+
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> わあ！意外と普通の文章みたいですね！
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> そうでしょう？<span class="tech-term">タグ</span>とか<span class="tech-term">要素</span>とかは、「ここは見出しですよ」「ここは段落ですよ」って印を付けてるだけなんです。
+          <span class="tech-explanation">
+            タグ（Tag）: HTMLで使われる&lt;h1&gt;や&lt;p&gt;などの記号のことです。「ここから」と「ここまで」を示すために、開始タグ（&lt;p&gt;）と終了タグ（&lt;/p&gt;）がペアになっています。「タグ付け」することで、ブラウザにその部分がどのような役割を持つか伝えます。
+          </span>
+          <span class="tech-explanation">
+            要素（Element）: 開始タグから終了タグまでの全体を指します。例えば、&lt;p&gt;これは段落です&lt;/p&gt;という全体が「p要素」です。要素の中に別の要素を入れることもできます（入れ子構造）。
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section6">
+      <h3><span class="emoji">🌐</span> どうやってみんなに見せるの？</h3>
+      <h4>お手紙の配達で例えてみよう</h4>
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> でも、僕が作ったページを友達に見せるにはどうするんですか？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> いい質問ですね！年賀状を出すときのことを思い出してみてください。
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> 年賀状ですか？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> そう！こんな流れですよね：
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section7">
+      <h3><span class="emoji">📮</span> 年賀状の流れ → Webページの流れ</h3>
+      
+      <div class="diagram-container">
+        <h4>📮 年賀状とWebページの流れ比較</h4>
+        <div class="mermaid">
+          flowchart LR
+            subgraph 年賀状の流れ
+              A1[1. 太郎くんが年賀状を書く] -->|書く| B1[2. ポストに投函]
+              B1 -->|運ぶ| C1[3. 郵便屋さんが配達]
+              C1 -->|届ける| D1[4. 友達のお家に届く]
+              D1 -->|見る| E1[5. 友達が年賀状を読む]
+            end
+            
+            subgraph Webページの流れ
+              A2[1. 太郎くんがHTMLを書く] -->|保存| B2[2. インターネットに置く<br>（サーバー）]
+              B2 -->|転送| C2[3. インターネットが配達]
+              C2 -->|表示| D2[4. 友達のパソコンに届く]
+              D2 -->|閲覧| E2[5. 友達がブラウザで見る]
+            end
+            
+            style A1 fill:#FFC107,stroke:#FF9800,color:#000
+            style E1 fill:#4CAF50,stroke:#388E3C,color:#fff
+            style A2 fill:#FFC107,stroke:#FF9800,color:#000
+            style E2 fill:#4CAF50,stroke:#388E3C,color:#fff
+        </div>
+      </div>
+
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> なるほど！郵便屋さんがインターネットで、ポストが<span class="tech-term">サーバー</span>なんですね！
+          <span class="tech-explanation">
+            サーバー（Server）: インターネット上でWebページのファイルを保存し、世界中のユーザーにデータを提供するコンピューターのことです。「給仕する人」という意味で、リクエストに応じてデータを「提供する」役割を持っています。24時間365日、常に稼働していて、誰かがWebページを見たいと思ったときにすぐに提供できる状態を維持しています。
+          </span>
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> 完璧！太郎くんの理解が早くて驚きです。
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section8">
+      <h3><span class="emoji">📱</span> どんな機械でも見れる不思議</h3>
+      <h4>同じ手紙、違う読み方</h4>
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> あ、そういえばスマホでもパソコンでも同じサイトが見れますよね？でも、画面の大きさが全然違うのに、どうして同じように見れるんですか？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> 太郎くん、とても良い気づきですね！実は、これも手紙に例えるとわかりやすいんです。
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <h4>📜 同じ手紙を、読む人によって見え方が変わる</h4>
+        <div class="mermaid">
+          flowchart TD
+            A[同じHTMLコンテンツ] --> B[パソコンで見る]
+            A --> C[スマホで見る]
+            A --> D[タブレットで見る]
+            
+            B --> E[大きな画面表示]
+            C --> F[小さな画面表示]
+            D --> G[中くらいの画面表示]
+            
+            style A fill:#4CAF50,stroke:#388E3C,color:#fff
+            style B fill:#9575CD,stroke:#7E57C2,color:#fff
+            style C fill:#9575CD,stroke:#7E57C2,color:#fff
+            style D fill:#9575CD,stroke:#7E57C2,color:#fff
+        </div>
+        <ul>
+          <li>👓 おじいちゃん：大きな文字で読む</li>
+          <li>🔍 お母さん：普通の大きさで読む</li>
+          <li>😎 太郎くん：好きな明るさで読む</li>
+        </ul>
+        <p>→ 手紙の内容（HTML）は同じだけど、読み方（見え方・CSS）が違う！</p>
+      </div>
+
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> ああ！中身は同じで、見せ方が変わるんですね！でも、どうやって自動で調整されるんですか？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> その通り！HTMLは中身（日記の内容）で、見た目は別の方法で決めるんです。それを次回の<span class="tech-term">CSS</span>で教えますね。
+          <span class="tech-explanation">
+            CSS（Cascading Style Sheets）: HTMLで作った構造に対して、色やサイズ、配置などの見た目（スタイル）を指定するための言語です。HTMLが「何を表示するか」を決めるのに対し、CSSは「どのように表示するか」を決めます。「Cascading（階層的）」とは、複数のスタイル指定がある場合に、どのスタイルを優先するかを決める仕組みのことです。
+          </span>
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> うーん、でもまだちょっとピンとこないです...実際にはどうなってるんですか？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> じゃあ、もっと身近な例で説明しましょう。太郎くん、電子書籍って使ったことありますか？
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> あ、はい！タブレットで漫画を読んだことがあります！
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> そう！電子書籍も同じなんです。同じ漫画でも、タブレットを縦にしたり横にしたりすると、自動でページの表示が変わりますよね？
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> そうか！Webページも同じように、見る機械に合わせて自動で調整されるんですね！すごい！
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section9">
+      <h3><span class="emoji">🎯</span> 太郎くんの1週間後</h3>
+      <h4>こんなページが作れるようになります！</h4>
+      <div class="dialogue">
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> 1週間がんばって練習すれば、太郎くんはこんなページが作れるようになりますよ。
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <h4>🌟 太郎くんの自己紹介ページ</h4>
+        <div class="ascii-art">
+┌─────────────────────┐
+│        太郎のページ      │
+├─────────────────────┤
+│    [太郎くんの写真]      │
+│                          │
+│ はじめまして！太郎です。 │
+│ 中学2年生です。          │
+│                          │
+│ 好きなこと：             │
+│ ・サッカー               │
+│ ・ゲーム                 │
+│ ・読書                   │
+│                          │
+│ よろしくお願いします！   │
+└─────────────────────┘
+        </div>
+      </div>
+
+      <div class="note">
+        <h4>覚える魔法の言葉は5つだけ！</h4>
+        <div class="code-example">
+<span class="code-tag">&lt;h1&gt;</span>大きな見出し<span class="code-tag">&lt;/h1&gt;</span>     ← タイトル用
+<span class="code-tag">&lt;p&gt;</span>普通の文章<span class="code-tag">&lt;/p&gt;</span>         ← 文章用
+<span class="code-tag">&lt;img</span> <span class="code-attribute">src=</span><span class="code-value">"写真.jpg"</span><span class="code-tag">&gt;</span>      ← 写真用
+<span class="code-tag">&lt;ul&gt;&lt;li&gt;</span>リスト<span class="code-tag">&lt;/li&gt;&lt;/ul&gt;</span>  ← 箇条書き用
+<span class="code-tag">&lt;strong&gt;</span>大事な言葉<span class="code-tag">&lt;/strong&gt;</span> ← 強調用
+        </div>
+      </div>
+
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> たった5つですか？思ったよりぜんぜん少ない！
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> そうなんです！最初はこの5つだけで十分なんですよ。
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> でも、なんで&lt; &gt;で囲むんですか？普通に書いちゃダメなの？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> いい質問！これは「ここからここまでが見出しですよ」って、<span class="tech-term">コンピューターに教えてあげるための目印</span>なんです。
+          <span class="tech-explanation">
+            マークアップ（Markup）: テキストに「印をつける」作業のことです。HTMLでは&lt;h1&gt;などの「タグ」を使って、テキストの役割や構造を示します。コンピューターはこれらの印を見て、「ここは見出しだから大きく表示しよう」「ここは段落だから適切な間隔をあけよう」などと判断します。
+          </span>
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> なるほど！コンピューターは賢そうに見えて、実は「ここは見出し」って教えてあげないとわからないんですね！
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> その通り！太郎くんの理解力、素晴らしいですね。
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section10">
+      <h3><span class="emoji">📚</span> これからの楽しい学習計画</h3>
+      <h4>みんなで一緒に成長しよう</h4>
+      <div class="dialogue">
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> これから12回に分けて、楽しく学んでいきましょう。
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section11">
+      <h3><span class="emoji">🎈</span> 学習の冒険ストーリー</h3>
+      
+      <div class="progress-indicator">
+        <div class="progress-step">
+          <div class="progress-dot active"></div>
+          <div class="progress-label">基礎理解編</div>
+        </div>
+        <div class="progress-step">
+          <div class="progress-dot"></div>
+          <div class="progress-label">実践スキル編</div>
+        </div>
+        <div class="progress-step">
+          <div class="progress-dot"></div>
+          <div class="progress-label">応用知識編</div>
+        </div>
+      </div>
+      
+      <h4>ステージ1：基礎理解編（1-4回）</h4>
+      <ul>
+        <li>Webページって何？（今日）→ 理解完了！</li>
+        <li>HTMLで文章を書こう → 日記帳作り</li>
+        <li>CSSで見た目を可愛くしよう → 色塗り・デザイン</li>
+        <li>初めてのページ完成！ → 自己紹介ページ</li>
+      </ul>
+
+      <h4>ステージ2：実践スキル編（5-9回）</h4>
+      <ul>
+        <li>写真の配置を覚えよう</li>
+        <li>もっと美しい色とフォント</li>
+        <li>スマホでも見れるようにしよう</li>
+        <li>お問い合わせフォームを作ろう</li>
+        <li>メニューを作ろう</li>
+      </ul>
+
+      <h4>ステージ3：応用知識編（10-12回）</h4>
+      <ul>
+        <li>自由自在なレイアウト</li>
+        <li>動くアニメーション</li>
+        <li>プロみたいなページに！</li>
+      </ul>
+    </div>
+
+    <div class="section" id="section12">
+      <h3><span class="emoji">💡</span> 始める前の準備</h3>
+      <h4>必要なものは3つだけ</h4>
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> 何か特別な道具がいりますか？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> 安心してください！太郎くんのパソコンに最初から入ってるもので十分です。
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section13">
+      <h3><span class="emoji">🧰</span> 太郎くんの道具箱</h3>
+      <table class="comparison-table">
+        <tr>
+          <th>道具</th>
+          <th>用途</th>
+          <th>すでに持ってる？</th>
+        </tr>
+        <tr>
+          <td>メモ帳</td>
+          <td>HTMLを書く</td>
+          <td>✅ パソコンに入ってる</td>
+        </tr>
+        <tr>
+          <td><span class="tech-term">ブラウザ</span>
+            <span class="tech-explanation">
+              ブラウザ（Browser）: インターネット上のWebページを表示するためのソフトウェアです。Chrome、Safari、Firefox、Edgeなどがあります。「閲覧する」という意味の「browse」から来ています。HTMLファイルを解釈して、画面に表示する役割を持っています。同じHTMLでも、ブラウザによって若干表示が異なることがあります。
+            </span>
+          </td>
+          <td>結果を見る</td>
+          <td>✅ ChromeやSafari</td>
+        </tr>
+        <tr>
+          <td>やる気</td>
+          <td>一番大事！</td>
+          <td>✅ 太郎くんは十分！</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section" id="section14">
+      <h3><span class="emoji">🤔</span> 心配なことはありませんか？</h3>
+      <h4>よくある心配と真実</h4>
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> でも...本当に僕にもできるでしょうか？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> 太郎くんが心配に思うのは当然です。でも大丈夫！他の人も同じことを心配してたんですよ。
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> あきらパパも最初は心配だったんですか？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> もちろん！私なんて最初、&lt;h1&gt;を&lt;h 1&gt;って書いちゃって、「なんで見出しにならないんだろう？」って1時間も悩んだことがあるんです。
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> えっ！？あきらパパでもそんな間違いを？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> そうなんです！でも、そういう失敗があったから、今は太郎くんに分かりやすく教えられるんですよ。
+        </div>
+      </div>
+
+      <table class="comparison-table">
+        <tr>
+          <th>太郎くんの心配</th>
+          <th>実際はどうなの？</th>
+        </tr>
+        <tr>
+          <td>❓ 英語ができないとダメ？</td>
+          <td>⭕ 中学英語で十分！辞書も使える</td>
+        </tr>
+        <tr>
+          <td>❓ 数学が苦手だけど...</td>
+          <td>⭕ 数学はほとんど使わない</td>
+        </tr>
+        <tr>
+          <td>❓ センスがないかも...</td>
+          <td>⭕ 最初は真似から。センスは後から！</td>
+        </tr>
+        <tr>
+          <td>❓ 間違えたら壊れる？</td>
+          <td>⭕ 間違えても簡単に直せる</td>
+        </tr>
+        <tr>
+          <td>❓ お金がかかる？</td>
+          <td>⭕ 無料で全部できる！</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section" id="section15">
+      <h3><span class="emoji">🎉</span> 今日の大発見！</h3>
+      <h4>Webページ作りの秘密がわかった</h4>
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> 今日は色々なことがわかりました！
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> どんなことが一番驚きでしたか？
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> Webページって、僕が毎日書いてる日記と同じ構造だったことです！それと、たった5つのルールで作れるって知って、すごく安心しました。
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> 素晴らしい気づきですね！
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section16">
+      <h3><span class="emoji">✨</span> 今日の太郎くんの成長</h3>
+      <div class="highlight-box">
+        <ul>
+          <li>🎯 <strong>Webページ = デジタルの日記帳</strong>
+            <ul>
+              <li>構造は日記と同じ（タイトル、本文、画像）</li>
+            </ul>
+          </li>
+          <li>📝 <strong>HTML = 作文のルール</strong>
+            <ul>
+              <li>「ここは見出し」「ここは段落」の印をつけるだけ</li>
+            </ul>
+          </li>
+          <li>📮 <strong>インターネット = デジタルの郵便屋さん</strong>
+            <ul>
+              <li>作ったページをみんなに配達してくれる</li>
+            </ul>
+          </li>
+          <li>🎈 <strong>5つの魔法の言葉で十分</strong>
+            <ul>
+              <li>最初は簡単なルールだけ覚えればOK</li>
+            </ul>
+          </li>
+          <li>💪 <strong>必要なのはやる気だけ</strong>
+            <ul>
+              <li>特別な道具や才能は要らない</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="dialogue">
+        <div class="taro">
+          <span class="speaker">太郎:</span> 次回が楽しみです！HTMLを実際に書いてみるんですよね？
+        </div>
+        <div class="akira">
+          <span class="speaker">あきらパパ:</span> はい！次回は「HTMLで文章を書こう」ということで、太郎くんに最初のHTMLを書いてもらいます。きっと「えー！こんなに簡単なの？」って驚きますよ。
+        </div>
+        <div class="taro">
+          <span class="speaker">太郎:</span> わくわくしてきました！頑張ります！
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="section17">
+      <h3><span class="emoji">📚</span> 今日覚えた大切な言葉</h3>
+      <table class="comparison-table">
+        <tr>
+          <th>用語</th>
+          <th>説明</th>
+        </tr>
+        <tr>
+          <td><span class="tech-term">HTML</span></td>
+          <td>HyperText Markup Language - Webページの文章を書く言語（日記のルールみたいなもの）</td>
+        </tr>
+        <tr>
+          <td><span class="tech-term">ブラウザ</span></td>
+          <td>Webページを見るソフト（Chrome、Safariなど）</td>
+        </tr>
+        <tr>
+          <td><span class="tech-term">サーバー</span></td>
+          <td>Webページを保存して配達する場所</td>
+        </tr>
+        <tr>
+          <td><span class="tech-term">タグ</span></td>
+          <td>HTMLのルール記号（&lt;h1&gt;や&lt;p&gt;など）</td>
+        </tr>
+        <tr>
+          <td><span class="tech-term">CSS</span></td>
+          <td>Cascading Style Sheets - Webページの見た目を決める言語</td>
+        </tr>
+      </table>
+
+      <div class="note">
+        <h4>NEXT</h4>
+        <p>HTMLって実は文書の構造なんです【h1, p, img, ul, li】</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 あきらパパの「対話で学ぼう！HTML/CSS入門」</p>
+  </footer>
+</body>
+</html>

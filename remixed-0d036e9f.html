@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML/CSS入門：太郎くんの自己紹介ページ作成ガイド</title>
+  
+  <!-- Mermaid.js の読み込み -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        securityLevel: 'loose', // emoji対応
+        fontFamily: '"Kaisei Decol", sans-serif',
+        themeVariables: {
+          primaryColor: '#4CAF50',
+          primaryTextColor: '#fff',
+          primaryBorderColor: '#E91E63',
+          lineColor: '#009688',
+          secondaryColor: '#FFC107',
+          tertiaryColor: '#FAFAFA'
+        },
+        flowchart: {
+          cornerRadius: 15,
+          curve: 'cardinal',
+          htmlLabels: true
+        }
+      });
+    });
+  </script>
+  
+  <style>
+    /* 基本スタイル */
+    :root {
+      --main-color: #4CAF50;
+      --accent-1: #9575CD;
+      --accent-2: #FFC107;
+      --accent-3: #009688;
+      --accent-4: #E91E63;
+      --bg-color: #FAFAFA;
+      --text-color: #333333;
+      --code-bg: #f5f5f5;
+      --border-radius: 8px;
+    }
+    
+    body {
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* 見出しスタイル */
+    h1 {
+      color: var(--main-color);
+      border-bottom: 3px solid var(--main-color);
+      padding-bottom: 10px;
+      font-size: 2.2em;
+      text-align: center;
+    }
+    
+    h2 {
+      color: var(--accent-3);
+      margin-top: 40px;
+      border-left: 6px solid var(--accent-3);
+      padding-left: 15px;
+      font-size: 1.8em;
+    }
+    
+    h3 {
+      color: var(--accent-1);
+      margin-top: 30px;
+      font-size: 1.5em;
+    }
+    
+    h4 {
+      color: var(--accent-4);
+      margin-top: 25px;
+      font-size: 1.3em;
+    }
+    
+    /* コードブロック */
+    pre {
+      background-color: var(--code-bg);
+      padding: 15px;
+      border-radius: var(--border-radius);
+      overflow-x: auto;
+      border-left: 4px solid var(--accent-2);
+    }
+    
+    code {
+      font-family: 'Consolas', 'Monaco', monospace;
+      background-color: var(--code-bg);
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+    
+    /* コンセプトボックス */
+    .concept-box {
+      background-color: rgba(76, 175, 80, 0.1);
+      border: 1px solid var(--main-color);
+      border-radius: var(--border-radius);
+      padding: 15px;
+      margin: 20px 0;
+    }
+    
+    .concept-title {
+      font-weight: bold;
+      color: var(--main-color);
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+    
+    /* 例と説明ボックス */
+    .example-box {
+      background-color: rgba(149, 117, 205, 0.1);
+      border: 1px solid var(--accent-1);
+      border-radius: var(--border-radius);
+      padding: 15px;
+      margin: 20px 0;
+    }
+    
+    .example-title {
+      font-weight: bold;
+      color: var(--accent-1);
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+    
+    /* ポイントボックス */
+    .point-box {
+      background-color: rgba(255, 193, 7, 0.1);
+      border: 1px solid var(--accent-2);
+      border-radius: var(--border-radius);
+      padding: 15px;
+      margin: 20px 0;
+    }
+    
+    .point-title {
+      font-weight: bold;
+      color: var(--accent-2);
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+    
+    /* タグ解説ボックス */
+    .tag-box {
+      background-color: rgba(0, 150, 136, 0.1);
+      border: 1px solid var(--accent-3);
+      border-radius: var(--border-radius);
+      padding: 15px;
+      margin: 20px 0;
+    }
+    
+    .tag-title {
+      font-weight: bold;
+      color: var(--accent-3);
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+    
+    /* 注意ボックス */
+    .caution-box {
+      background-color: rgba(233, 30, 99, 0.1);
+      border: 1px solid var(--accent-4);
+      border-radius: var(--border-radius);
+      padding: 15px;
+      margin: 20px 0;
+    }
+    
+    .caution-title {
+      font-weight: bold;
+      color: var(--accent-4);
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+    
+    /* 進行フローチャート */
+    .flow-chart {
+      width: 100%;
+      margin: 30px 0;
+    }
+    
+    /* 2列レイアウト */
+    .two-column {
+      display: flex;
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .column {
+      flex: 1;
+    }
+    
+    /* レスポンシブ対応 */
+    @media (max-width: 768px) {
+      .two-column {
+        flex-direction: column;
+      }
+    }
+    
+    /* ページプレビュー */
+    .page-preview {
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: var(--border-radius);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      background-color: white;
+    }
+    
+    /* 目次スタイル */
+    .toc {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin: 20px 0;
+    }
+    
+    .toc-title {
+      font-weight: bold;
+      color: var(--main-color);
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+    
+    .toc ul {
+      list-style-type: none;
+      padding-left: 15px;
+    }
+    
+    .toc ul li {
+      margin-bottom: 8px;
+    }
+    
+    .toc a {
+      color: var(--accent-3);
+      text-decoration: none;
+    }
+    
+    .toc a:hover {
+      text-decoration: underline;
+    }
+    
+    /* エモジアイコン用 */
+    .emoji-icon {
+      font-size: 1.5em;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    
+    /* 進行状態表示 */
+    .progress-bar {
+      background-color: #e0e0e0;
+      border-radius: 20px;
+      height: 20px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    
+    .progress {
+      background-color: var(--main-color);
+      height: 100%;
+      text-align: center;
+      color: white;
+      font-size: 0.8em;
+      line-height: 20px;
+    }
+    
+    /* 太郎くんの成長チャート */
+    .growth-chart {
+      width: 100%;
+      margin: 30px 0;
+    }
+    
+    /* タグツールボックス */
+    .toolbox {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    
+    .tool {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      padding: 10px;
+      flex: 1 1 200px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .tool-title {
+      font-weight: bold;
+      color: var(--accent-3);
+      margin-bottom: 5px;
+    }
+    
+    .tool-desc {
+      font-size: 0.9em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌟 実際に初めてのページを作ろう！</h1>
+  <p>HTMLとCSSの基礎を学んだあとは、実際にあなた自身のWebページを作る時間です。この章では、太郎くんと一緒に自己紹介ページを一から作り上げていきます。</p>
+  
+  <div class="toc">
+    <div class="toc-title">📋 このチャプターの目次</div>
+    <ul>
+      <li><a href="#review">👥 前回のおさらい：HTML/CSSの基礎</a></li>
+      <li><a href="#structure">🏗️ Webページの基本構造を理解しよう</a></li>
+      <li><a href="#first-page">📋 シンプルな自己紹介ページの作成</a></li>
+      <li><a href="#lists">📝 リスト機能でコンテンツを整理する</a></li>
+      <li><a href="#images">📷 画像を追加してページを視覚的に強化する</a></li>
+      <li><a href="#complete">🎉 ついに完成！Webページの確認と共有</a></li>
+      <li><a href="#discoveries">🌟 Webページ作成で学んだ発見</a></li>
+      <li><a href="#skills">🏆 HTML/CSS基礎編で習得したスキル</a></li>
+      <li><a href="#next-steps">🚀 次のステップ：実践的なWeb開発へ</a></li>
+    </ul>
+  </div>
+  
+  <div class="progress-bar">
+    <div class="progress" style="width: 33%;">基礎編 4/12章</div>
+  </div>
+  
+  <h2 id="review">👥 前回のおさらい：HTML/CSSの基礎</h2>
+  
+  <div class="concept-box">
+    <div class="concept-title">🔍 HTML/CSSの役割の復習</div>
+    <p><strong>HTML（エイチティーエムエル）</strong>とは「HyperText Markup Language（ハイパーテキスト・マークアップ・ランゲージ）」の略で、Webページの<strong>構造</strong>を定義する言語です。これはちょうど家の骨組みや間取りのようなものです。</p>
+    <p><strong>CSS（シーエスエス）</strong>とは「Cascading Style Sheets（カスケーディング・スタイル・シート）」の略で、HTMLで作った構造の<strong>見た目</strong>をデザインする言語です。これは家の壁紙や家具、照明など内装に相当します。</p>
+  </div>
+  
+  <div class="two-column">
+    <div class="column">
+      <div class="tag-box">
+        <div class="tag-title">📌 これまでに学んだHTMLタグ</div>
+        <ul>
+          <li><code>&lt;h1&gt;</code> - 大見出し（Heading 1）</li>
+          <li><code>&lt;p&gt;</code> - 段落（Paragraph）</li>
+          <li><code>&lt;strong&gt;</code> - 強調（Strong）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="column">
+      <div class="tag-box">
+        <div class="tag-title">🎨 これまでに学んだCSSプロパティ</div>
+        <ul>
+          <li><code>color</code> - 文字の色</li>
+          <li><code>font-size</code> - 文字の大きさ</li>
+          <li><code>background-color</code> - 背景の色</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="example-box">
+    <div class="example-title">💬 太郎くんの感想</div>
+    <p>「あきらパパ、前回はCSSの魔法でページが大変身して、本当に感動しました！今日はいよいよ完全なWebページが作れるんですよね？」</p>
+    <p>「ついに！でも、ちゃんとした完成品が作れるか心配です...」</p>
+  </div>
+  
+  <div class="point-box">
+    <div class="point-title">💡 あきらパパのアドバイス</div>
+    <p>「大丈夫！レゴブロックで大きな城を作るみたいに、今まで覚えた小さなパーツを組み合わせるだけなんですよ。」</p>
+  </div>
+  
+  <h2 id="structure">🏗️ Webページの基本構造を理解しよう</h2>
+  
+  <div class="concept-box">
+    <div class="concept-title">🔍 Webページの基本構造</div>
+    <p>Webページは、さまざまな要素を組み合わせて作られています。まずは一番シンプルな形から始めましょう。</p>
+  </div>
+  
+  <div class="flow-chart">
+    <div class="mermaid">
+    flowchart TB
+      A["Webページの基本構造"] --> B["見出し（タイトル）"]
+      A --> C["本文（自己紹介）"]
+      A --> D["締めの言葉"]
+      style A fill:#4CAF50,color:#fff
+      style B fill:#009688,color:#fff
+      style C fill:#009688,color:#fff
+      style D fill:#009688,color:#fff
+    </div>
+  </div>
+  
+  <div class="example-box">
+    <div class="example-title">📋 シンプルな自己紹介ページの構造</div>
+    <pre>
+┌─────────────────────┐
+│     太郎のページ     │ ← タイトル（h1タグ）
+├─────────────────────┤
+│ はじめまして！       │
+│ 僕の名前は太郎です。 │ ← 自己紹介（pタグ）
+│ 中学2年生です。      │
+├─────────────────────┤
+│ よろしくお願いします！│ ← 締めの言葉（pタグ+strongタグ）
+└─────────────────────┘</pre>
+  </div>
+  
+  <h2 id="first-page">📋 シンプルな自己紹介ページの作成</h2>
+  
+  <div class="concept-box">
+    <div class="concept-title">🔍 HTMLコーディングの基本手順</div>
+    <p>HTMLコードは<strong>タグ</strong>（Tag：指示書）を使って書きます。タグは「&lt;」と「&gt;」で囲まれた指示で、Webブラウザに「この部分はこういう役割です」と教えます。</p>
+  </div>
+  
+  <div class="tag-box">
+    <div class="tag-title">📌 基本的なページを作るHTMLコード</div>
+    <pre><code>&lt;h1&gt;太郎のページ&lt;/h1&gt;
+
+&lt;p&gt;はじめまして！&lt;/p&gt;
+&lt;p&gt;僕の名前は太郎です。&lt;/p&gt;
+&lt;p&gt;中学2年生です。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;よろしくお願いします！&lt;/strong&gt;&lt;/p&gt;</code></pre>
+  </div>
+  
+  <div class="tag-box">
+    <div class="tag-title">🎨 基本的なページのデザインを決めるCSSコード</div>
+    <pre><code>&lt;style&gt;
+h1 {
+    color: green;
+    font-size: 36px;
+}
+
+p {
+    color: darkgreen;
+    font-size: 18px;
+}
+
+strong {
+    color: orange;
+    font-size: 20px;
+}
+&lt;/style&gt;</code></pre>
+  </div>
+  
+  <div class="example-box">
+    <div class="example-title">👀 作成したページのプレビュー</div>
+    <div class="page-preview">
+      <h1 style="color: green; font-size: 36px;">太郎のページ</h1>
+      <p style="color: darkgreen; font-size: 18px;">はじめまして！</p>
+      <p style="color: darkgreen; font-size: 18px;">僕の名前は太郎です。</p>
+      <p style="color: darkgreen; font-size: 18px;">中学2年生です。</p>
+      <p style="color: darkgreen; font-size: 18px;"><strong style="color: orange; font-size: 20px;">よろしくお願いします！</strong></p>
+    </div>
+  </div>
+  
+  <div class="point-box">
+    <div class="point-title">💡 コードの解説</div>
+    <ul>
+      <li><code>&lt;h1&gt;</code> - <strong>見出しタグ</strong>（Heading）：ページのタイトルや大見出しを表示します。数字は1〜6まであり、小さくなっていきます。</li>
+      <li><code>&lt;p&gt;</code> - <strong>段落タグ</strong>（Paragraph）：文章の段落を表します。自動的に上下に余白ができます。</li>
+      <li><code>&lt;strong&gt;</code> - <strong>強調タグ</strong>：内容を強調して太字で表示します。</li>
+      <li><code>color: green;</code> - 文字の色を緑色に設定します。</li>
+      <li><code>font-size: 36px;</code> - 文字の大きさを36ピクセル（px）に設定します。</li>
+    </ul>
+  </div>
+  
+  <h2 id="lists">📝 リスト機能でコンテンツを整理する</h2>
+  
+  <div class="concept-box">
+    <div class="concept-title">🔍 リストとは</div>
+    <p><strong>リスト</strong>（List）は、複数の項目を整理して表示するための機能です。買い物リストや手順書のように、関連する項目を箇条書きで表示できます。</p>
+  </div>
+  
+  <div class="tag-box">
+    <div class="tag-title">📌 リストを作るHTMLタグ</div>
+    <pre><code>&lt;ul&gt;        ← リスト全体の始まり（Unordered List：順序なしリスト）
+    &lt;li&gt;サッカー&lt;/li&gt;     ← 1つ目の項目（List Item：リスト項目）
+    &lt;li&gt;ゲーム&lt;/li&gt;       ← 2つ目の項目
+    &lt;li&gt;読書&lt;/li&gt;         ← 3つ目の項目
+&lt;/ul&gt;       ← リスト全体の終わり</code></pre>
+  </div>
+  
+  <div class="flow-chart">
+    <div class="mermaid">
+    flowchart TB
+      A["リストの構造"] --> B["ul（リスト全体）"]
+      B --> C["li（項目1）"]
+      B --> D["li（項目2）"]
+      B --> E["li（項目3）"]
+      style A fill:#4CAF50,color:#fff
+      style B fill:#9575CD,color:#fff
+      style C fill:#FFC107,color:#fff
+      style D fill:#FFC107,color:#fff
+      style E fill:#FFC107,color:#fff
+    </div>
+  </div>
+  
+  <div class="tag-box">
+    <div class="tag-title">📌 リストを追加したHTMLコード</div>
+    <pre><code>&lt;h1&gt;太郎のページ&lt;/h1&gt;
+
+&lt;p&gt;はじめまして！&lt;/p&gt;
+&lt;p&gt;僕の名前は太郎です。&lt;/p&gt;
+&lt;p&gt;中学2年生です。&lt;/p&gt;
+
+&lt;h2&gt;好きなこと&lt;/h2&gt;
+&lt;ul&gt;
+    &lt;li&gt;サッカー&lt;/li&gt;
+    &lt;li&gt;ゲーム&lt;/li&gt;
+    &lt;li&gt;読書&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;よろしくお願いします！&lt;/strong&gt;&lt;/p&gt;</code></pre>
+  </div>
+  
+  <div class="tag-box">
+    <div class="tag-title">🎨 リストのスタイルを追加したCSSコード</div>
+    <pre><code>&lt;style&gt;
+h1 {
+    color: green;
+    font-size: 36px;
+}
+
+h2 {
+    color: darkgreen;
+    font-size: 24px;
+}
+
+p {
+    color: darkgreen;
+    font-size: 18px;
+}
+
+ul {
+    color: darkgreen;
+    font-size: 18px;
+}
+
+strong {
+    color: orange;
+    font-size: 20px;
+}
+&lt;/style&gt;</code></pre>
+  </div>
+  
+  <div class="example-box">
+    <div class="example-title">👀 リスト追加後のページプレビュー</div>
+    <div class="page-preview">
+      <h1 style="color: green; font-size: 36px;">太郎のページ</h1>
+      <p style="color: darkgreen; font-size: 18px;">はじめまして！</p>
+      <p style="color: darkgreen; font-size: 18px;">僕の名前は太郎です。</p>
+      <p style="color: darkgreen; font-size: 18px;">中学2年生です。</p>
+      <h2 style="color: darkgreen; font-size: 24px;">好きなこと</h2>
+      <ul style="color: darkgreen; font-size: 18px;">
+        <li>サッカー</li>
+        <li>ゲーム</li>
+        <li>読書</li>
+      </ul>
+      <p style="color: darkgreen; font-size: 18px;"><strong style="color: orange; font-size: 20px;">よろしくお願いします！</strong></p>
+    </div>
+  </div>
+  
+  <div class="point-box">
+    <div class="point-title">💡 リストタグの解説</div>
+    <ul>
+      <li><code>&lt;h2&gt;</code> - <strong>中見出しタグ</strong>：<code>&lt;h1&gt;</code>より小さい見出しで、セクションのタイトルに使います。</li>
+      <li><code>&lt;ul&gt;</code> - <strong>順序なしリストタグ</strong>（Unordered List）：箇条書きのリストを作成します。自動的に各項目の前に黒丸（・）が表示されます。</li>
+      <li><code>&lt;li&gt;</code> - <strong>リスト項目タグ</strong>（List Item）：リストの各項目を定義します。</li>
+    </ul>
+  </div>
+  
+  <div class="caution-box">
+    <div class="caution-title">⚠️ 注意点</div>
+    <p><code>&lt;ul&gt;</code>と<code>&lt;li&gt;</code>タグは必ずセットで使います。<code>&lt;ul&gt;</code>の中に<code>&lt;li&gt;</code>を入れる構造です。<code>&lt;li&gt;</code>だけでは正しく表示されません。</p>
+  </div>
+  
+  <h2 id="images">📷 画像を追加してページを視覚的に強化する</h2>
+  
+  <div class="concept-box">
+    <div class="concept-title">🔍 画像タグとは</div>
+    <p><strong>画像タグ</strong>（Image Tag）は、Webページに写真やイラストなどの画像を表示するためのHTMLタグです。視覚的な情報を追加することで、ページの魅力が大きく向上します。</p>
+  </div>
+  
+  <div class="tag-box">
+    <div class="tag-title">📌 画像を追加するHTMLタグ</div>
+    <pre><code>&lt;img src="写真の場所" alt="写真の説明"&gt;</code></pre>
+    <p>※ <code>&lt;img&gt;</code>タグは、他のタグと違って終了タグ（<code>&lt;/img&gt;</code>）がありません。これを「自己完結型タグ」といいます。</p>
+  </div>
+  
+  <div class="point-box">
+    <div class="point-title">💡 imgタグの属性（アトリビュート）</div>
+    <ul>
+      <li><code>src</code> - <strong>ソース属性</strong>（Source）：画像ファイルの場所（URL）を指定します。</li>
+      <li><code>alt</code> - <strong>代替テキスト属性</strong>（Alternative Text）：画像が表示できない場合や、スクリーンリーダー（目の不自由な方が使う読み上げソフト）のために、画像の内容を説明するテキストを設定します。</li>
+    </ul>
+  </div>
+  
+  <div class="tag-box">
+    <div class="tag-title">📌 画像を追加した完成版HTMLコード</div>
+    <pre><code>&lt;h1&gt;太郎のページ&lt;/h1&gt;
+
+&lt;img src="https://via.placeholder.com/200x200/90EE90/000000?text=太郎" alt="太郎くんの写真"&gt;
+
+&lt;p&gt;はじめまして！&lt;/p&gt;
+&lt;p&gt;僕の名前は太郎です。&lt;/p&gt;
+&lt;p&gt;中学2年生です。&lt;/p&gt;
+
+&lt;h2&gt;好きなこと&lt;/h2&gt;
+&lt;ul&gt;
+    &lt;li&gt;サッカー&lt;/li&gt;
+    &lt;li&gt;ゲーム&lt;/li&gt;
+    &lt;li&gt;読書&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;よろしくお願いします！&lt;/strong&gt;&lt;/p&gt;</code></pre>
+  </div>
+  
+  <div class="tag-box">
+    <div class="tag-title">🎨 画像のスタイルを追加した完成版CSSコード</div>
+    <pre><code>&lt;style&gt;
+h1 {
+    color: green;
+    font-size: 36px;
+}
+
+h2 {
+    color: darkgreen;
+    font-size: 24px;
+}
+
+p {
+    color: darkgreen;
+    font-size: 18px;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;  /* 画像を円形にする魔法 */
+}
+
+ul {
+    color: darkgreen;
+    font-size: 18px;
+}
+
+strong {
+    color: orange;
+    font-size: 20px;
+}
+
+body {
+    background-color: lightgreen;  /* ページ全体の背景色 */
+}
+&lt;/style&gt;</code></pre>
+  </div>
+  
+  <div class="example-box">
+    <div class="example-title">👀 完成したページのプレビュー</div>
+    <div class="page-preview" style="background-color: lightgreen;">
+      <h1 style="color: green; font-size: 36px;">太郎のページ</h1>
+      <img src="https://via.placeholder.com/200x200/90EE90/000000?text=太郎" alt="太郎くんの写真" style="width: 200px; height: 200px; border-radius: 50%;">
+      <p style="color: darkgreen; font-size: 18px;">はじめまして！</p>
+      <p style="color: darkgreen; font-size: 18px;">僕の名前は太郎です。</p>
+      <p style="color: darkgreen; font-size: 18px;">中学2年生です。</p>
+      <h2 style="color: darkgreen; font-size: 24px;">好きなこと</h2>
+      <ul style="color: darkgreen; font-size: 18px;">
+        <li>サッカー</li>
+        <li>ゲーム</li>
+        <li>読書</li>
+      </ul>
+      <p style="color: darkgreen; font-size: 18px;"><strong style="color: orange; font-size: 20px;">よろしくお願いします！</strong></p>
+    </div>
+  </div>
+  
+  <div class="point-box">
+    <div class="point-title">💡 新しく追加したCSSプロパティの解説</div>
+    <ul>
+      <li><code>width: 200px;</code> - 画像の幅を200ピクセルに設定します。</li>
+      <li><code>height: 200px;</code> - 画像の高さを200ピクセルに設定します。</li>
+      <li><code>border-radius: 50%;</code> - 要素の角を丸くします。50%にすると完全な円形になります。</li>
+      <li><code>background-color: lightgreen;</code> - 背景色を薄い緑色に設定します。</li>
+    </ul>
+  </div>
+  
+  <h2 id="complete">🎉 ついに完成！Webページの確認と共有</h2>
+  
+  <div class="concept-box">
+    <div class="concept-title">🔍 Webページ完成の意義</div>
+    <p>シンプルな自己紹介ページの完成は、Web開発の第一歩です。少ない要素でも、見出し、段落、リスト、画像という基本的なHTML要素を組み合わせることで、立派なWebページを作ることができます。</p>
+  </div>
+  
+  <div class="example-box">
+    <div class="example-title">💬 太郎くんの感想</div>
+    <p>「信じられません！朝は何もなかったのに、夜には僕の写真とプロフィールが入った本当のWebページができてる！」</p>
+    <p>「お父さん、お母さん、妹！僕の完成したWebページを見てください！」</p>
+  </div>
+  
+  <div class="point-box">
+    <div class="point-title">💡 完成したWebページの共有方法</div>
+    <p>作成したHTMLファイルは、以下の方法で共有できます：</p>
+    <ul>
+      <li>家族や友達のパソコンで直接ファイルを開いてもらう</li>
+      <li>メールに添付して送る</li>
+      <li>USBメモリーなどでファイルをコピーする</li>
+      <li>（上級編）レンタルサーバーにアップロードして、インターネット上で公開する</li>
+    </ul>
+  </div>
+  
+  <h2 id="discoveries">🌟 Webページ作成で学んだ発見</h2>
+  
+  <div class="two-column">
+    <div class="column">
+      <div class="concept-box">
+        <div class="concept-title">📌 画像タグの発見</div>
+        <p>「<code>&lt;img&gt;</code>タグは本当に魔法みたい！写真が表示された瞬間は感動しました。」</p>
+        <p>画像タグを使うことで、テキストだけでなく視覚的な情報も伝えられるようになります。</p>
+      </div>
+    </div>
+    <div class="column">
+      <div class="concept-box">
+        <div class="concept-title">📝 リストの便利さ</div>
+        <p>「<code>&lt;ul&gt;</code>と<code>&lt;li&gt;</code>を使うと、情報がきれいに整理されて見やすくなる！」</p>
+        <p>リストは情報を整理して表示するのに最適な方法です。視覚的にも分かりやすくなります。</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="concept-box">
+    <div class="concept-title">📚 見出しの階層構造</div>
+    <p>「<code>&lt;h1&gt;</code>と<code>&lt;h2&gt;</code>の使い分けで、内容が整理されて分かりやすくなる！」</p>
+    <p>見出しタグは単に文字を大きくするだけでなく、文書の構造を定義します。検索エンジンもこの構造を理解するので、SEO（検索エンジン最適化）にも重要です。</p>
+  </div>
+  
+  <h2 id="skills">🏆 HTML/CSS基礎編で習得したスキル</h2>
+  
+  <div class="growth-chart">
+    <div class="mermaid">
+    flowchart TB
+      subgraph "1日目: Webページの基礎"
+        A["HTMLは付箋のような役割"]
+      end
+      subgraph "2日目: HTML文書構造"
+        B["h1, p, strongタグの習得"]
+      end
+      subgraph "3日目: CSSで見た目の変更"
+        C["color, font-size, background-color"]
+      end
+      subgraph "4日目: 完全なページ作成"
+        D["img, ul, li, h2タグの習得"]
+      end
+      A --> B --> C --> D
+      style A fill:#FFC107,color:#000
+      style B fill:#9575CD,color:#fff
+      style C fill:#E91E63,color:#fff
+      style D fill:#4CAF50,color:#fff
+    </div>
+  </div>
+  
+  <div class="two-column">
+    <div class="column">
+      <div class="tag-box">
+        <div class="tag-title">📝 HTMLツールボックス</div>
+        <div class="toolbox">
+          <div class="tool">
+            <div class="tool-title"><code>&lt;h1&gt;</code> 大見出し</div>
+            <div class="tool-desc">ページのタイトル用</div>
+          </div>
+          <div class="tool">
+            <div class="tool-title"><code>&lt;h2&gt;</code> 中見出し</div>
+            <div class="tool-desc">セクションのタイトル用</div>
+          </div>
+          <div class="tool">
+            <div class="tool-title"><code>&lt;p&gt;</code> 段落</div>
+            <div class="tool-desc">文章を書くための基本要素</div>
+          </div>
+          <div class="tool">
+            <div class="tool-title"><code>&lt;strong&gt;</code> 強調</div>
+            <div class="tool-desc">重要なテキストを強調表示</div>
+          </div>
+          <div class="tool">
+            <div class="tool-title"><code>&lt;img&gt;</code> 画像</div>
+            <div class="tool-desc">写真やイラストを表示</div>
+          </div>
+          <div class="tool">
+            <div class="tool-title"><code>&lt;ul&gt;&lt;li&gt;</code> リスト</div>
+            <div class="tool-desc">項目を箇条書きで表示</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="tag-box">
+        <div class="tag-title">🎨 CSSツールボックス</div>
+        <div class="toolbox">
+          <div class="tool">
+            <div class="tool-title"><code>color</code></div>
+            <div class="tool-desc">文字の色を変更</div>
+          </div>
+          <div class="tool">
+            <div class="tool-title"><code>font-size</code></div>
+            <div class="tool-desc">文字の大きさを変更</div>
+          </div>
+          <div class="tool">
+            <div class="tool-title"><code>background-color</code></div>
+            <div class="tool-desc">背景色を変更</div>
+          </div>
+          <div class="tool">
+            <div class="tool-title"><code>width</code> / <code>height</code></div>
+            <div class="tool-desc">要素の幅と高さを設定</div>
+          </div>
+          <div class="tool">
+            <div class="tool-title"><code>border-radius</code></div>
+            <div class="tool-desc">角を丸くする</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="concept-box">
+    <div class="concept-title">🔍 Webページの基本的な構成要素</div>
+    <p>これまでに学んだHTMLとCSSを組み合わせることで、基本的なWebページが作れるようになりました。この基礎があれば、さらに複雑で美しいページへと発展させることができます。</p>
+  </div>
+  
+  <h2 id="next-steps">🚀 次のステップ：実践的なWeb開発へ</h2>
+  
+  <div class="concept-box">
+    <div class="concept-title">🔍 実践編への期待</div>
+    <p>基礎編で学んだスキルをベースに、実践編ではより高度なWebページ作成技術を学びます。</p>
+  </div>
+  
+  <div class="flow-chart">
+    <div class="mermaid">
+    flowchart LR
+      A["基礎編完了"] --> B["5. 要素の配置とレイアウト"]
+      B --> C["6. 色とフォントで魅力的に"]
+      C --> D["7. スマホ対応"]
+      D --> E["8. フォームとボタン"]
+      E --> F["9. ナビゲーション"]
+      style A fill:#4CAF50,color:#fff
+      style B fill:#009688,color:#fff
+      style C fill:#009688,color:#fff
+      style D fill:#009688,color:#fff
+      style E fill:#009688,color:#fff
+      style F fill:#009688,color:#fff
+    </div>
+  </div>
+  
+  <div class="example-box">
+    <div class="example-title">💬 太郎くんの感想</div>
+    <p>「実践編も頑張ります！もっとかっこいいページを作って、友達みんなに見せたいです！」</p>
+  </div>
+  
+  <div class="point-box">
+    <div class="point-title">💡 実践編で学ぶ内容</div>
+    <ul>
+      <li><strong>要素の配置とレイアウト</strong> - 写真と文章をきれいに並べる方法</li>
+      <li><strong>色とフォントで魅力的に</strong> - プロフェッショナルなデザイン</li>
+      <li><strong>スマホにも対応させよう</strong> - どんな画面サイズでも見やすいページ</li>
+      <li><strong>フォームとボタンを作ろう</strong> - ユーザーとのインタラクション</li>
+      <li><strong>ナビゲーションとメニュー</strong> - 複数ページのサイト作成</li>
+    </ul>
+  </div>
+  
+  <div class="concept-box">
+    <div class="concept-title">🎊 基礎編卒業おめでとう！</div>
+    <p>基礎編を完了したことで、Webページ作成の基本的なスキルを身につけました。これからの実践編では、さらに高度な技術を学び、本格的なWebサイト開発者への道を進んでいきましょう！</p>
+  </div>
+  
+  <div class="tag-box">
+    <div class="tag-title">📚 基礎編で覚えた魔法の言葉まとめ</div>
+    <pre><code>HTMLの魔法
+&lt;h1&gt;, &lt;h2&gt;: 見出しの魔法（大きさの違い）
+&lt;p&gt;: 文章の魔法
+&lt;strong&gt;: 強調の魔法
+&lt;img&gt;: 写真の魔法
+&lt;ul&gt;, &lt;li&gt;: リストの魔法
+
+CSSの魔法
+color: 文字の色を変える魔法
+font-size: 文字の大きさを変える魔法
+background-color: 背景の色を変える魔法
+width, height: 大きさを決める魔法
+border-radius: 角を丸くする魔法</code></pre>
+  </div>
+  
+  <div class="point-box">
+    <div class="point-title">💡 あきらパパからの応援メッセージ</div>
+    <p>「太郎くんは素晴らしいWeb魔法使いになりましたね！次回からの実践編も、きっと楽しい発見がたくさん待っていますよ！」</p>
+  </div>
+  
+  <div class="progress-bar">
+    <div class="progress" style="width: 33%;">基礎編 4/12章 完了！</div>
+  </div>
+  
+  <div style="text-align: center; margin-top: 40px;">
+    <p><a href="#" style="margin-right: 20px; color: var(--accent-3);">◀ 前の章：CSSって見た目を決める魔法です</a> | <a href="#" style="color: var(--accent-3);">次の章：要素の配置とレイアウト ▶</a></p>
+  </div>
+</body>
+</html>

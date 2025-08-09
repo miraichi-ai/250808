@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSSの魔法世界: 見た目を変える魅力的な技術</title>
+  
+  <!-- Mermaid.js の読み込み -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        securityLevel: 'loose',
+        fontFamily: '"Kaisei Decol", sans-serif',
+        themeVariables: {
+          primaryColor: '#4CAF50',
+          primaryTextColor: '#fff',
+          primaryBorderColor: '#E91E63',
+          lineColor: '#009688',
+          secondaryColor: '#FFC107',
+          tertiaryColor: '#FAFAFA'
+        },
+        flowchart: {
+          cornerRadius: 15,
+          curve: 'cardinal',
+          htmlLabels: true
+        }
+      });
+    });
+  </script>
+
+  <style>
+    /* 基本スタイル */
+    :root {
+      --main-color: #4CAF50;
+      --accent-1: #9575CD;
+      --accent-2: #FFC107;
+      --accent-3: #009688;
+      --accent-4: #E91E63;
+      --bg-color: #FAFAFA;
+    }
+    
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: var(--bg-color);
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    h1, h2, h3, h4 {
+      color: var(--main-color);
+      margin-top: 1.5em;
+    }
+    
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 1em;
+      color: var(--main-color);
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    h1::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: var(--accent-2);
+      border-radius: 2px;
+    }
+    
+    h2 {
+      border-left: 5px solid var(--accent-3);
+      padding-left: 15px;
+      font-size: 1.8em;
+    }
+    
+    h3 {
+      font-size: 1.4em;
+      border-bottom: 2px dashed var(--accent-1);
+      padding-bottom: 5px;
+      display: inline-block;
+    }
+    
+    p {
+      margin-bottom: 1.2em;
+      font-size: 1.1em;
+    }
+    
+    /* コードブロック */
+    pre {
+      background: #f5f5f5;
+      border-left: 4px solid var(--accent-3);
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+    
+    code {
+      background: #f0f0f0;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      color: var(--accent-4);
+    }
+    
+    /* 注釈ボックス */
+    .note-box {
+      background-color: rgba(76, 175, 80, 0.1);
+      border-left: 4px solid var(--main-color);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 0 5px 5px 0;
+    }
+    
+    .example-box {
+      background-color: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid var(--accent-2);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 0 5px 5px 0;
+    }
+    
+    .definition-box {
+      background-color: rgba(149, 117, 205, 0.1);
+      border-left: 4px solid var(--accent-1);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 0 5px 5px 0;
+    }
+    
+    /* 図表 */
+    .diagram-container {
+      margin: 30px 0;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    /* 人形アイコン */
+    .doll-container {
+      display: flex;
+      justify-content: center;
+      margin: 30px 0;
+    }
+    
+    .doll {
+      position: relative;
+      width: 120px;
+      height: 200px;
+      margin: 0 30px;
+      text-align: center;
+    }
+    
+    .doll-head {
+      width: 60px;
+      height: 60px;
+      background: #FFD3B4;
+      border-radius: 50%;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .doll-body {
+      width: 70px;
+      height: 100px;
+      margin: 5px auto 0;
+      border-radius: 35px 35px 25px 25px;
+      position: relative;
+    }
+    
+    .doll-body.html {
+      background: #E0E0E0;
+    }
+    
+    .doll-body.css-red {
+      background: #FF6B6B;
+    }
+    
+    .doll-body.css-blue {
+      background: #4FC3F7;
+    }
+    
+    .doll-body.css-green {
+      background: #81C784;
+    }
+    
+    .doll-label {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    
+    /* CSS選択子と宣言の説明図 */
+    .css-rule-diagram {
+      margin: 30px 0;
+      text-align: center;
+    }
+    
+    .css-rule {
+      display: inline-block;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .selector {
+      display: inline-block;
+      background: #E1F5FE;
+      padding: 5px 15px;
+      border-radius: 20px;
+      margin-right: 10px;
+      font-weight: bold;
+      color: #0277BD;
+    }
+    
+    .declaration-block {
+      display: inline-block;
+      background: #F3E5F5;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-weight: bold;
+      color: #7B1FA2;
+    }
+    
+    .property {
+      color: #D81B60;
+      font-weight: bold;
+    }
+    
+    .value {
+      color: #2E7D32;
+      font-weight: bold;
+    }
+    
+    /* カラーパレット */
+    .color-palette {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 30px 0;
+    }
+    
+    .color-item {
+      width: 120px;
+      margin: 10px;
+      text-align: center;
+    }
+    
+    .color-sample {
+      height: 60px;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .color-name {
+      font-size: 0.9em;
+      font-weight: bold;
+    }
+    
+    .color-value {
+      font-size: 0.8em;
+      color: #666;
+      font-family: monospace;
+    }
+    
+    /* 終了マーク */
+    .end-mark {
+      text-align: center;
+      margin: 40px 0 20px;
+      color: var(--accent-4);
+      font-size: 2em;
+    }
+    
+    /* 実装例の表示エリア */
+    .preview-container {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      background: white;
+    }
+    
+    .preview-label {
+      background: var(--accent-3);
+      color: white;
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    
+    /* 比較表示 */
+    .comparison {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0;
+    }
+    
+    .comparison-item {
+      width: 48%;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+    }
+    
+    .comparison-label {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: var(--accent-3);
+    }
+    
+    /* レスポンシブデザイン */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      h2 {
+        font-size: 1.5em;
+      }
+      
+      .comparison {
+        flex-direction: column;
+      }
+      
+      .comparison-item {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      
+      .doll-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .doll {
+        margin-bottom: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CSSの魔法世界: 見た目を変える魅力的な技術</h1>
+    
+    <h2>1. 前回のおさらい - HTMLによる構造づくり</h2>
+    <p>私たちは前回、HTMLタグを使ってWebページの「骨組み」を作る方法を学びました。HTMLはHyperText Markup Language（ハイパーテキスト・マークアップ・ランゲージ）の略で、Webページの構造を定義する言語です。</p>
+    
+    <div class="example-box">
+      <h4>前回学んだHTMLの例：</h4>
+      <pre><code>&lt;h1&gt;夏祭りの思い出&lt;/h1&gt;
+&lt;p&gt;昨日、家族で地元の夏祭りに行きました。&lt;/p&gt;
+&lt;p&gt;綿あめが&lt;strong&gt;とても美味しかった&lt;/strong&gt;です。&lt;/p&gt;</code></pre>
+    </div>
+    
+    <p>しかし、HTMLだけでは文字や背景の色、大きさなどの「見た目」を自由に変えることができません。白い背景に黒い文字だけでは、ちょっと寂しい感じがしますね。</p>
+    
+    <h2>2. CSSって何だろう？ - お人形の着せ替え例え</h2>
+    <p>CSSは「Cascading Style Sheets（カスケーディング・スタイル・シート）」の略で、Webページの見た目を装飾するための言語です。「カスケーディング」とは「滝のように上から下へ流れる」という意味で、スタイルが適用される仕組みを表しています。</p>
+    
+    <div class="definition-box">
+      <p><strong>CSS（Cascading Style Sheets）</strong>: Webページの見た目を決めるための言語。色、大きさ、配置など、ページの視覚的な部分をすべて制御します。</p>
+    </div>
+    
+    <p>CSSをわかりやすく例えると「お人形の着せ替え」のようなものです。HTMLはお人形の体（構造）、CSSはお人形に着せる洋服（見た目）と考えるとイメージしやすいでしょう。</p>
+    
+    <div class="doll-container">
+      <div class="doll">
+        <div class="doll-head"></div>
+        <div class="doll-body html"></div>
+        <div class="doll-label">HTML（お人形の体）</div>
+      </div>
+      <div class="doll">
+        <div class="doll-head"></div>
+        <div class="doll-body css-red"></div>
+        <div class="doll-label">CSS赤ドレス</div>
+      </div>
+      <div class="doll">
+        <div class="doll-head"></div>
+        <div class="doll-body css-blue"></div>
+        <div class="doll-label">CSS青ドレス</div>
+      </div>
+      <div class="doll">
+        <div class="doll-head"></div>
+        <div class="doll-body css-green"></div>
+        <div class="doll-label">CSS緑ドレス</div>
+      </div>
+    </div>
+    
+    <p>同じお人形（HTML）でも、着せる洋服（CSS）によって印象がまったく変わります。Webページも同じで、HTMLの内容はそのままでも、CSSを変えるだけで見た目を大きく変えることができるのです。</p>
+    
+    <div class="diagram-container">
+      <div class="preview-label">HTMLとCSSの関係図</div>
+      <pre class="mermaid">
+flowchart TD
+    A[HTML] -->|構造を定義| B[Webページ]
+    C[CSS] -->|見た目を装飾| B
+    
+    subgraph HTML要素
+    D[h1: 見出し]
+    E[p: 段落]
+    F[strong: 強調]
+    end
+    
+    subgraph CSSプロパティ
+    G[color: 文字色]
+    H[font-size: 文字サイズ]
+    I[background-color: 背景色]
+    end
+    
+    A --- D & E & F
+    C --- G & H & I
+      </pre>
+    </div>
+    
+    <h2>3. CSSの魔法を実演 - ページの大変身</h2>
+    <p>実際にCSSの魔法を使って、前回作ったシンプルなHTMLを華やかに変身させてみましょう。まずは昨日作ったHTMLがどのように表示されるか確認してみましょう。</p>
+    
+    <div class="comparison">
+      <div class="comparison-item">
+        <div class="comparison-label">CSSなしのHTMLページ</div>
+        <div style="font-family: sans-serif;">
+          <h1 style="color: black; font-size: 1.5em; background-color: white;">夏祭りの思い出</h1>
+          <p style="color: black; font-size: 1em;">昨日、家族で地元の夏祭りに行きました。</p>
+          <p style="color: black; font-size: 1em;">綿あめが<strong style="color: black;">とても美味しかった</strong>です。</p>
+        </div>
+      </div>
+      <div class="comparison-item">
+        <div class="comparison-label">CSS適用後のHTMLページ</div>
+        <div style="font-family: sans-serif; background-color: lightyellow; padding: 10px;">
+          <h1 style="color: blue; font-size: 1.8em;">夏祭りの思い出</h1>
+          <p style="color: gray; font-size: 1.1em;">昨日、家族で地元の夏祭りに行きました。</p>
+          <p style="color: gray; font-size: 1.1em;">綿あめが<strong style="color: red;">とても美味しかった</strong>です。</p>
+        </div>
+      </div>
+    </div>
+    
+    <p>見た目がどれだけ変わったか比較してみてください。同じHTMLなのに、CSSを適用するだけでこんなに印象が変わるのです。これが「CSSの魔法」です！</p>
+    
+    <h2>4. CSSの魔法ファイルを作る</h2>
+    <p>CSSを適用するには、大きく分けて2つの方法があります。今回は簡単な方法として、HTMLファイルの中に直接CSSを書く「インラインスタイル」を使ってみましょう。</p>
+    
+    <h3>4.1 styleタグを使った魔法のコード</h3>
+    <p>HTMLファイルの中に、<code>&lt;style&gt;</code>タグを使ってCSSコードを書きます。このタグは「ここからCSSの魔法が始まりますよ」という印になります。</p>
+    
+    <div class="example-box">
+      <h4>HTMLファイルにCSSを追加する例：</h4>
+      <pre><code>&lt;h1&gt;夏祭りの思い出&lt;/h1&gt;
+&lt;p&gt;昨日、家族で地元の夏祭りに行きました。&lt;/p&gt;
+&lt;p&gt;綿あめが&lt;strong&gt;とても美味しかった&lt;/strong&gt;です。&lt;/p&gt;
+
+&lt;style&gt;
+h1 {
+    color: blue;
+    font-size: 36px;
+}
+
+p {
+    color: gray;
+    font-size: 18px;
+}
+
+strong {
+    color: red;
+}
+
+body {
+    background-color: lightyellow;
+}
+&lt;/style&gt;</code></pre>
+    </div>
+    
+    <div class="note-box">
+      <p><strong>専門用語：インラインスタイル</strong> - HTMLファイル内に直接CSSを書く方法のこと。小規模なページや学習段階では便利ですが、大きなサイトでは通常、別ファイルにCSSを書きます。</p>
+    </div>
+    
+    <h3>4.2 外部CSSファイルを作る方法</h3>
+    <p>実際のWebサイト制作では、CSSを別ファイルとして保存することが一般的です。これを「外部スタイルシート」と呼びます。</p>
+    
+    <div class="example-box">
+      <h4>外部CSSファイルの作り方：</h4>
+      <p>1. テキストエディタで新しいファイルを作成</p>
+      <p>2. CSSコードを入力</p>
+      <pre><code>h1 {
+    color: blue;
+    font-size: 36px;
+}
+
+p {
+    color: gray;
+    font-size: 18px;
+}
+
+strong {
+    color: red;
+}
+
+body {
+    background-color: lightyellow;
+}</code></pre>
+      <p>3. 「style.css」という名前で保存</p>
+      <p>4. HTMLファイルから読み込む</p>
+      <pre><code>&lt;head&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;</code></pre>
+    </div>
+    
+    <div class="note-box">
+      <p><strong>専門用語：外部スタイルシート</strong> - CSSを別ファイルとして保存し、HTMLから参照する方法。複数のページで同じデザインを共有したい場合に便利です。</p>
+    </div>
+    
+    <h2>5. CSSの基本ルール - 魔法の構造</h2>
+    <p>CSSは「誰に」「何を」「どうする」という3つの要素で構成されています。これを専門的には「セレクタ」と「宣言ブロック」と呼びます。</p>
+    
+    <div class="css-rule-diagram">
+      <div class="css-rule">
+        <span class="selector">h1</span> <span class="declaration-block">{ <span class="property">color</span>: <span class="value">blue</span>; }</span>
+      </div>
+    </div>
+    
+    <div class="diagram-container">
+      <div class="preview-label">CSSルールの構造</div>
+      <pre class="mermaid">
+flowchart LR
+    A[セレクタ]
+    B[宣言ブロック]
+    A --> B
+    
+    subgraph セレクタ
+    C[h1: 見出しを選択]
+    D[p: 段落を選択]
+    E[strong: 強調を選択]
+    end
+    
+    subgraph 宣言ブロック
+    F[プロパティ: 値;]
+    G[color: blue;]
+    H[font-size: 36px;]
+    end
+    
+    C --> G & H
+      </pre>
+    </div>
+    
+    <h3>5.1 セレクタ - 誰に魔法をかけるか</h3>
+    <p>セレクタ（Selector）は「誰に魔法をかけるか」を指定します。例えば、<code>h1</code>はすべての見出し（h1タグ）に、<code>p</code>はすべての段落（pタグ）に魔法をかけることを意味します。</p>
+    
+    <div class="definition-box">
+      <p><strong>セレクタ（Selector）</strong>: CSSで装飾したいHTML要素を指定するための記述。HTMLタグ名、クラス名、ID名などで指定できます。</p>
+    </div>
+    
+    <h3>5.2 プロパティと値 - どんな魔法をかけるか</h3>
+    <p>宣言ブロック内のプロパティ（Property）と値（Value）のペアで「どんな魔法をかけるか」を指定します。</p>
+    
+    <div class="definition-box">
+      <p><strong>プロパティ（Property）</strong>: 変更したいスタイルの種類を指定する（例: color, font-size, background-color）</p>
+      <p><strong>値（Value）</strong>: プロパティに対して設定する具体的な値（例: blue, 36px, lightyellow）</p>
+    </div>
+    
+    <h3>5.3 重要なCSSプロパティと値</h3>
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+      <tr style="background: var(--accent-3); color: white;">
+        <th style="padding: 10px; text-align: left;">プロパティ</th>
+        <th style="padding: 10px; text-align: left;">説明</th>
+        <th style="padding: 10px; text-align: left;">値の例</th>
+      </tr>
+      <tr style="background: #f9f9f9;">
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>color</code></td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">文字の色を指定</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">red, blue, #FF0000</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>font-size</code></td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">文字の大きさを指定</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">12px, 2em, 150%</td>
+      </tr>
+      <tr style="background: #f9f9f9;">
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>background-color</code></td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">背景色を指定</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">yellow, #FFFF00, lightyellow</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>font-weight</code></td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">文字の太さを指定</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">bold, normal, 700</td>
+      </tr>
+      <tr style="background: #f9f9f9;">
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;"><code>text-align</code></td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">文字の配置を指定</td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;">left, center, right</td>
+      </tr>
+    </table>
+    
+    <h2>6. 色の魔法 - Webページに色をつける</h2>
+    <p>CSSでは様々な方法で色を指定できます。色の名前を使う方法と、色コードを使う方法があります。</p>
+    
+    <h3>6.1 色の名前による指定</h3>
+    <p>英語の色の名前を直接使って色を指定する方法です。主要な色はほとんど名前があります。</p>
+    
+    <div class="color-palette">
+      <div class="color-item">
+        <div class="color-sample" style="background-color: red;"></div>
+        <div class="color-name">red</div>
+        <div class="color-value">赤色</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: blue;"></div>
+        <div class="color-name">blue</div>
+        <div class="color-value">青色</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: green;"></div>
+        <div class="color-name">green</div>
+        <div class="color-value">緑色</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: yellow;"></div>
+        <div class="color-name">yellow</div>
+        <div class="color-value">黄色</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: purple;"></div>
+        <div class="color-name">purple</div>
+        <div class="color-value">紫色</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: orange;"></div>
+        <div class="color-name">orange</div>
+        <div class="color-value">オレンジ色</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: black;"></div>
+        <div class="color-name">black</div>
+        <div class="color-value">黒色</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: white; border: 1px solid #ddd;"></div>
+        <div class="color-name">white</div>
+        <div class="color-value">白色</div>
+      </div>
+    </div>
+    
+    <h3>6.2 色の濃さのバリエーション</h3>
+    <p>基本色の前に「light」や「dark」をつけると、薄い色や濃い色を指定できます。</p>
+    
+    <div class="color-palette">
+      <div class="color-item">
+        <div class="color-sample" style="background-color: lightblue;"></div>
+        <div class="color-name">lightblue</div>
+        <div class="color-value">薄い青</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: blue;"></div>
+        <div class="color-name">blue</div>
+        <div class="color-value">青</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: darkblue;"></div>
+        <div class="color-name">darkblue</div>
+        <div class="color-value">濃い青</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: lightgreen;"></div>
+        <div class="color-name">lightgreen</div>
+        <div class="color-value">薄い緑</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: green;"></div>
+        <div class="color-name">green</div>
+        <div class="color-value">緑</div>
+      </div>
+      <div class="color-item">
+        <div class="color-sample" style="background-color: darkgreen;"></div>
+        <div class="color-name">darkgreen</div>
+        <div class="color-value">濃い緑</div>
+      </div>
+    </div>
+    
+    <div class="note-box">
+      <p><strong>専門用語：カラーコード</strong> - 16進数で表記される色の値。例えば、#FF0000は赤色、#00FF00は緑色、#0000FFは青色を表します。RGBカラーモデルに基づいています。</p>
+    </div>
+    
+    <h2>7. CSSのカスタマイズ例 - 好みの色に変える</h2>
+    <p>ここでは、太郎くんと妹さんの好みに合わせた2つのバージョンのCSSを見てみましょう。</p>
+    
+    <h3>7.1 太郎くん好みの緑バージョン</h3>
+    <div class="example-box">
+      <pre><code>h1 {
+    color: green;
+    font-size: 40px;
+}
+
+p {
+    color: darkgreen;
+    font-size: 20px;
+}
+
+strong {
+    color: orange;
+}
+
+body {
+    background-color: lightgreen;
+}</code></pre>
+    </div>
+    
+    <div class="preview-container" style="background-color: lightgreen;">
+      <div class="preview-label">緑バージョンのプレビュー</div>
+      <h1 style="color: green; font-size: 40px; margin: 0;">夏祭りの思い出</h1>
+      <p style="color: darkgreen; font-size: 20px;">昨日、家族で地元の夏祭りに行きました。</p>
+      <p style="color: darkgreen; font-size: 20px;">綿あめが<strong style="color: orange;">とても美味しかった</strong>です。</p>
+    </div>
+    
+    <h3>7.2 妹さん好みのピンクバージョン</h3>
+    <div class="example-box">
+      <pre><code>h1 {
+    color: hotpink;
+    font-size: 40px;
+}
+
+p {
+    color: deeppink;
+    font-size: 20px;
+}
+
+strong {
+    color: purple;
+}
+
+body {
+    background-color: lightpink;
+}</code></pre>
+    </div>
+    
+    <div class="preview-container" style="background-color: lightpink;">
+      <div class="preview-label">ピンクバージョンのプレビュー</div>
+      <h1 style="color: hotpink; font-size: 40px; margin: 0;">夏祭りの思い出</h1>
+      <p style="color: deeppink; font-size: 20px;">昨日、家族で地元の夏祭りに行きました。</p>
+      <p style="color: deeppink; font-size: 20px;">綿あめが<strong style="color: purple;">とても美味しかった</strong>です。</p>
+    </div>
+    
+    <p>同じHTMLに対して、CSSだけを変えることで全く違う印象のページになることがわかります。これがCSSの持つ魔法の力です！</p>
+    
+    <h2>8. CSSの適用プロセス - 魔法がかかる仕組み</h2>
+    <p>CSSがどのようにHTMLに適用されるのか、そのプロセスを図解してみましょう。</p>
+    
+    <div class="diagram-container">
+      <div class="preview-label">CSSの適用プロセス</div>
+      <pre class="mermaid">
+flowchart TD
+    A[ブラウザがHTMLを読み込む] --> B[HTMLの構造を解析]
+    B --> C[CSSを読み込む]
+    C --> D[CSSのルールを解析]
+    D --> E[HTMLの各要素にスタイルを適用]
+    E --> F[最終的なページを表示]
+    
+    subgraph CSS適用順序
+    G[ブラウザのデフォルトスタイル]
+    H[外部スタイルシート]
+    I[内部スタイル]
+    J[インラインスタイル]
+    end
+    
+    G --> H --> I --> J
+      </pre>
+    </div>
+    
+    <div class="note-box">
+      <p><strong>専門用語：カスケード（Cascade）</strong> - 複数のスタイルが競合した場合に、どのスタイルが優先されるかを決める仕組み。通常、より具体的なセレクタほど優先度が高くなります。</p>
+    </div>
+    
+    <h2>9. 今後の可能性 - CSSでできること</h2>
+    <p>今回は基本的なCSSプロパティ（color, font-size, background-color）だけを紹介しましたが、CSSではさらに多くのことができます。</p>
+    
+    <ul>
+      <li>テキストの装飾（下線、斜体、太字など）</li>
+      <li>ボックスの枠線や影をつける</li>
+      <li>要素の配置やレイアウト</li>
+      <li>アニメーション効果</li>
+      <li>スマホなどの画面サイズに合わせたデザイン変更</li>
+    </ul>
+    
+    <div class="diagram-container">
+      <div class="preview-label">CSSで表現できるもの</div>
+      <pre class="mermaid">
+mindmap
+  root((CSS))
+    基本スタイル
+      色
+      サイズ
+      フォント
+    レイアウト
+      位置指定
+      配置
+      グリッド
+      フレックスボックス
+    視覚効果
+      影
+      角丸
+      透明度
+      グラデーション
+    アニメーション
+      トランジション
+      キーフレーム
+      変形
+    レスポンシブ
+      メディアクエリ
+      可変サイズ
+      </pre>
+    </div>
+    
+    <h2>10. まとめ - CSSの魔法を習得しよう</h2>
+    <p>今回学んだCSSの基本を振り返りましょう：</p>
+    
+    <ol>
+      <li><strong>CSSとは</strong>：Webページの見た目を装飾するための言語</li>
+      <li><strong>HTMLとCSSの関係</strong>：HTMLが構造、CSSが見た目を担当</li>
+      <li><strong>CSSの基本構造</strong>：セレクタと宣言ブロックの組み合わせ</li>
+      <li><strong>主要プロパティ</strong>：color, font-size, background-color</li>
+      <li><strong>色の指定方法</strong>：色の名前や濃淡のバリエーション</li>
+      <li><strong>CSSの適用方法</strong>：インラインスタイルと外部スタイルシート</li>
+    </ol>
+    
+    <p>これらの基本を理解すれば、あなたもWebページを美しく装飾する「CSSの魔法使い」への第一歩を踏み出せます！</p>
+    
+    <div class="end-mark">🎨</div>
+  </div>
+</body>
+</html>

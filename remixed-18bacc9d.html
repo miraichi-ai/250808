@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>あきらパパの「対話で学ぼう！HTML/CSS入門」- 図解版</title>
+  
+  <!-- Mermaid.js の読み込み -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        securityLevel: 'loose',
+        fontFamily: '"Kaisei Decol", sans-serif',
+        themeVariables: {
+          primaryColor: '#4CAF50',
+          primaryTextColor: '#fff',
+          primaryBorderColor: '#E91E63',
+          lineColor: '#009688',
+          secondaryColor: '#FFC107',
+          tertiaryColor: '#9575CD'
+        },
+        flowchart: {
+          cornerRadius: 15,
+          curve: 'cardinal',
+          htmlLabels: true
+        }
+      });
+    });
+  </script>
+  
+  <style>
+    /* フォントと基本スタイル */
+    @import url('https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;500;700&display=swap');
+    
+    :root {
+      --main-color: #4CAF50;
+      --accent-1: #9575CD;
+      --accent-2: #FFC107;
+      --accent-3: #009688;
+      --accent-4: #E91E63;
+      --bg-color: #FAFAFA;
+      --text-color: #333333;
+      --light-gray: #f0f0f0;
+      --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    body {
+      font-family: 'Kaisei Decol', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* ヘッダー */
+    header {
+      background-color: var(--main-color);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+    }
+    
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    
+    h2 {
+      color: var(--main-color);
+      border-bottom: 3px solid var(--accent-2);
+      padding-bottom: 10px;
+      margin-top: 2.5rem;
+    }
+    
+    h3 {
+      color: var(--accent-3);
+      border-left: 4px solid var(--accent-1);
+      padding-left: 10px;
+      margin-top: 1.5rem;
+    }
+    
+    /* カード要素 */
+    .card {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+    }
+    
+    /* 対話セクション */
+    .dialog {
+      display: flex;
+      margin-bottom: 15px;
+    }
+    
+    .dialog-avatar {
+      flex-shrink: 0;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--light-gray);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 15px;
+      font-size: 1.5rem;
+    }
+    
+    .akira-papa {
+      background-color: var(--accent-1);
+      color: white;
+    }
+    
+    .taro {
+      background-color: var(--accent-2);
+      color: var(--text-color);
+    }
+    
+    .dialog-bubble {
+      position: relative;
+      background-color: var(--light-gray);
+      padding: 15px;
+      border-radius: 10px;
+      flex-grow: 1;
+    }
+    
+    .dialog-bubble::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: -10px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-right: 10px solid var(--light-gray);
+    }
+    
+    .akira-papa-bubble {
+      background-color: #EFE5FD;
+    }
+    
+    .akira-papa-bubble::before {
+      border-right-color: #EFE5FD;
+    }
+    
+    .taro-bubble {
+      background-color: #FFF8E1;
+    }
+    
+    .taro-bubble::before {
+      border-right-color: #FFF8E1;
+    }
+    
+    /* コードブロック */
+    .code-block {
+      background-color: #282c34;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: monospace;
+      margin: 20px 0;
+    }
+    
+    .code-highlight {
+      color: var(--accent-2);
+      font-weight: bold;
+    }
+    
+    /* 特別なハイライト */
+    .highlight-box {
+      background-color: rgba(255, 193, 7, 0.2);
+      border-left: 5px solid var(--accent-2);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    /* 図解要素 */
+    .diagram-container {
+      margin: 30px 0;
+    }
+    
+    /* ステップ */
+    .steps {
+      counter-reset: step;
+    }
+    
+    .step {
+      position: relative;
+      padding-left: 50px;
+      margin-bottom: 20px;
+    }
+    
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: var(--main-color);
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+    }
+    
+    /* 比較表 */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    .comparison-table th, .comparison-table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+    }
+    
+    .comparison-table th {
+      background-color: var(--main-color);
+      color: white;
+      text-align: left;
+    }
+    
+    .comparison-table tr:nth-child(even) {
+      background-color: var(--light-gray);
+    }
+    
+    /* フッター */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      background-color: var(--main-color);
+      color: white;
+      border-radius: 8px;
+    }
+    
+    /* タグアニメーション用 */
+    @keyframes highlight {
+      0% { background-color: rgba(76, 175, 80, 0); }
+      50% { background-color: rgba(76, 175, 80, 0.3); }
+      100% { background-color: rgba(76, 175, 80, 0); }
+    }
+    
+    .tag-animation {
+      animation: highlight 2s infinite;
+      border-radius: 4px;
+      padding: 2px 4px;
+    }
+    
+    /* レスポンシブ対応 */
+    @media (max-width: 768px) {
+      .container {
+        padding: 10px;
+      }
+      
+      header {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .dialog {
+        flex-direction: column;
+      }
+      
+      .dialog-avatar {
+        margin-bottom: 10px;
+      }
+      
+      .dialog-bubble::before {
+        display: none;
+      }
+    }
+    
+    /* 魔法の箱 - HTMLタグを視覚的に表現 */
+    .tag-box {
+      border: 2px dashed var(--accent-1);
+      padding: 10px;
+      margin: 15px 0;
+      position: relative;
+    }
+    
+    .tag-label {
+      position: absolute;
+      top: -12px;
+      left: 10px;
+      background-color: white;
+      padding: 0 10px;
+      color: var(--accent-1);
+      font-weight: bold;
+    }
+    
+    .nested-tag {
+      margin-left: 20px;
+    }
+    
+    /* アイコンのCSS作成 */
+    .icon {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+    
+    .icon-note {
+      background: linear-gradient(135deg, var(--accent-2) 0%, var(--accent-2) 100%);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z'/%3E%3Cpath d='M14 17H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/%3E%3C/svg%3E") center/contain no-repeat;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z'/%3E%3Cpath d='M14 17H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z'/%3E%3C/svg%3E") center/contain no-repeat;
+    }
+    
+    .icon-key {
+      background: linear-gradient(135deg, var(--accent-4) 0%, var(--accent-4) 100%);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.6-4c-.8-2.3-3-4-5.6-4-3.3 0-6 2.7-6 6s2.7 6 6 6c2.6 0 4.8-1.7 5.6-4H17v4h4v-4h2v-4H12.6z'/%3E%3C/svg%3E") center/contain no-repeat;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm5.6-4c-.8-2.3-3-4-5.6-4-3.3 0-6 2.7-6 6s2.7 6 6 6c2.6 0 4.8-1.7 5.6-4H17v4h4v-4h2v-4H12.6z'/%3E%3C/svg%3E") center/contain no-repeat;
+    }
+    
+    .icon-magic {
+      background: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-1) 100%);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7.5 5.6L10 7 8.6 4.5 10 2 7.5 3.4 5 2l1.4 2.5L5 7zm12 9.8L17 14l1.4 2.5L17 19l2.5-1.4L22 19l-1.4-2.5L22 14zM22 2l-2.5 1.4L17 2l1.4 2.5L17 7l2.5-1.4L22 7l-1.4-2.5zm-7.63 5.29a.996.996 0 00-1.41 0L1.29 18.96a.996.996 0 000 1.41l2.34 2.34c.39.39 1.02.39 1.41 0L16.7 11.05a.996.996 0 000-1.41l-2.33-2.35zm-1.03 5.49l-2.12-2.12 2.44-2.44 2.12 2.12-2.44 2.44z'/%3E%3C/svg%3E") center/contain no-repeat;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7.5 5.6L10 7 8.6 4.5 10 2 7.5 3.4 5 2l1.4 2.5L5 7zm12 9.8L17 14l1.4 2.5L17 19l2.5-1.4L22 19l-1.4-2.5L22 14zM22 2l-2.5 1.4L17 2l1.4 2.5L17 7l2.5-1.4L22 7l-1.4-2.5zm-7.63 5.29a.996.996 0 00-1.41 0L1.29 18.96a.996.996 0 000 1.41l2.34 2.34c.39.39 1.02.39 1.41 0L16.7 11.05a.996.996 0 000-1.41l-2.33-2.35zm-1.03 5.49l-2.12-2.12 2.44-2.44 2.12 2.12-2.44 2.44z'/%3E%3C/svg%3E") center/contain no-repeat;
+    }
+    
+    .icon-check {
+      background: linear-gradient(135deg, var(--main-color) 0%, var(--main-color) 100%);
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") center/contain no-repeat;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") center/contain no-repeat;
+    }
+    
+    .emoji-tag {
+      display: inline-block;
+      width: 1.5em;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>あきらパパの「対話で学ぼう！HTML/CSS入門」</h1>
+      <p>Webページ作りの第一歩 - 図解版</p>
+    </header>
+    
+    <div class="card">
+      <h2>HTMLって実は文書の構造なんです【h1, p, img, ul, li】</h2>
+      
+      <div class="highlight-box">
+        <h3><span class="icon-key icon"></span> このチャプターのゴール</h3>
+        <p>HTMLの基本的なタグの意味と使い方を理解して、自分で簡単なWebページを作れるようになること。</p>
+      </div>
+      
+      <h3><span class="emoji-tag">👥</span> 前回のおさらい</h3>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          あきらパパ、前回はWebページが日記帳みたいなものだって分かりました！今日は実際にHTMLを書いてみるんですよね？
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          よく覚えてますね！今日は太郎くんの最初のWebページを作りますよ。
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          わあ、ついに！でも...ちょっと緊張します。本当に僕にもできるでしょうか？コンピューターが壊れたりしませんか？
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          大丈夫です！HTMLは全然危険じゃないんです。間違えても、コンピューターが壊れることは絶対にありません。今日は太郎くんが書いた作文をHTMLに変えるだけなんですよ。
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3><span class="emoji-tag">📝</span> 太郎くんの作文をHTMLにしてみよう</h3>
+      
+      <h4>まずは普通の作文から</h4>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          太郎くん、まずは普通に短い作文を書いてみてください。夏休みの思い出でも何でも。
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          えーっと...短めですよね？何について書こうかな...あ！昨日行った夏祭りのことでもいいですか？
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          もちろん！それはいいアイデアですね。
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          じゃあ、こんな感じでどうでしょう？<br><br>
+          <strong>夏祭りの思い出</strong><br><br>
+          昨日、家族で地元の夏祭りに行きました。<br><br>
+          綿あめがとても美味しかったです。
+        </div>
+      </div>
+      
+      <h4>HTMLの魔法をかけてみよう</h4>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          HTMLに変えるって、どうするんですか？特別な呪文とか覚えないといけないんですか？
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          いいえ、呪文じゃないんです。実は、各部分に「これは何の部分ですよ」という印をつけるだけなんです。
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          印？どんな印ですか？
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          こんな感じです。太郎くんの作文を見てみましょう。
+          <div class="code-block">
+            <span class="code-highlight">&lt;h1&gt;</span>夏祭りの思い出<span class="code-highlight">&lt;/h1&gt;</span><br>
+            <span class="code-highlight">&lt;p&gt;</span>昨日、家族で地元の夏祭りに行きました。<span class="code-highlight">&lt;/p&gt;</span><br>
+            <span class="code-highlight">&lt;p&gt;</span>綿あめがとても美味しかったです。<span class="code-highlight">&lt;/p&gt;</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          えっ！これだけですか？思ったより普通の文章みたいですね！
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          そうでしょう？&lt;h1&gt;は「これは大見出し」、&lt;p&gt;は「これは段落」という印なんです。
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          なるほど！&lt; &gt;で囲むのが印なんですね。でも、なんで最後に&lt;/h1&gt;とか&lt;/p&gt;ってスラッシュが入るんですか？
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          とてもいい質問！これは「ここまでが見出しですよ」「ここまでが段落ですよ」という終わりの印なんです。本でいうと、章の始まりと終わりみたいなものですね。
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3><span class="emoji-tag">🏷️</span> HTMLタグって実は「付箋」なんです</h3>
+      
+      <div class="diagram-container">
+        <div class="mermaid">
+          flowchart TD
+            A[普通の文章] -->|HTMLタグをつける| B[HTMLドキュメント]
+            B -->|ブラウザで表示| C[Webページ]
+            
+            style A fill:#FFC107,stroke:#FFC107,color:#333
+            style B fill:#9575CD,stroke:#9575CD,color:#fff
+            style C fill:#4CAF50,stroke:#4CAF50,color:#fff
+        </div>
+      </div>
+      
+      <h4>付箋で整理する感覚</h4>
+      
+      <div class="highlight-box">
+        <p><strong>HTMLタグ（HTML Tag）</strong>：「HTML要素（Element）」とも呼ばれ、Webページの構造を示す印です。&lt;開始タグ&gt;内容&lt;/終了タグ&gt;という形で使います。</p>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          HTMLタグは、ノートに貼る付箋みたいなものなんです。
+        </div>
+      </div>
+      
+      <h4>付箋 → HTMLタグ</h4>
+      
+      <div class="comparison-table">
+        <table>
+          <tr>
+            <th>太郎くんのノート</th>
+            <th>HTMLのページ</th>
+          </tr>
+          <tr>
+            <td>
+              [重要] ← 赤い付箋<br>
+              明日は数学のテスト
+            </td>
+            <td>
+              &lt;h1&gt; ← 見出しタグ<br>
+              夏祭りの思い出<br>
+              &lt;/h1&gt;
+            </td>
+          </tr>
+          <tr>
+            <td>
+              [メモ] ← 青い付箋<br>
+              公式を覚える
+            </td>
+            <td>
+              &lt;p&gt; ← 段落タグ<br>
+              昨日、家族で...<br>
+              &lt;/p&gt;
+            </td>
+          </tr>
+        </table>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          なるほど！HTMLタグは付箋みたいに「ここは何の部分ですよ」って教えてくれるんですね！
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3><span class="emoji-tag">💾</span> 実際にファイルを作ってみよう</h3>
+      
+      <div class="steps">
+        <div class="step">
+          <h4>ステップ1：メモ帳を開こう</h4>
+          <p><strong>メモ帳（Notepad）</strong>：Windowsに標準搭載されている簡易テキストエディタです。HTMLなどのコードを書くことができます。</p>
+          <div class="dialog">
+            <div class="dialog-avatar akira-papa">あ</div>
+            <div class="dialog-bubble akira-papa-bubble">
+              では、実際に作ってみましょう！メモ帳を開いてください。Windowsの場合は、スタートメニューから「メモ帳」を探すか、「notepad」と検索すれば出てきます。
+            </div>
+          </div>
+        </div>
+        
+        <div class="step">
+          <h4>ステップ2：HTMLを書いてみよう</h4>
+          <div class="dialog">
+            <div class="dialog-avatar taro">太</div>
+            <div class="dialog-bubble taro-bubble">
+              えーっと...間違えませんように...
+              <div class="code-block">
+                &lt;h1&gt;夏祭りの思い出&lt;/h1&gt;<br>
+                &lt;p&gt;昨日、家族で地元の夏祭りに行きました。&lt;/p&gt;<br>
+                &lt;p&gt;綿あめがとても美味しかったです。&lt;/p&gt;
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="step">
+          <h4>ステップ3：特別な名前で保存しよう</h4>
+          <p><strong>拡張子（Extension）</strong>：ファイル名の最後についている「.html」などの部分。ファイルの種類を示します。</p>
+          <div class="dialog">
+            <div class="dialog-avatar akira-papa">あ</div>
+            <div class="dialog-bubble akira-papa-bubble">
+              ファイル名のところに「太郎の日記.html」と書いてください。最後の「.html」が重要なんです。
+            </div>
+          </div>
+          <div class="dialog">
+            <div class="dialog-avatar akira-papa">あ</div>
+            <div class="dialog-bubble akira-papa-bubble">
+              その「.html」は「これはWebページのファイルですよ」という印なんです。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3><span class="emoji-tag">🌐</span> 魔法の瞬間 - ブラウザで見てみよう</h3>
+      
+      <div class="highlight-box">
+        <p><strong>ブラウザ（Browser）</strong>：HTMLファイルを読み込んで、Webページとして表示するソフトウェア。Google Chrome、Firefox、Microsoft Edgeなどが代表的です。</p>
+      </div>
+      
+      <h4>ついに太郎くんのWebページが誕生！</h4>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          さあ、いよいよ魔法の瞬間です！保存したファイルを探して、ダブルクリックしてみてください。
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          えーっと...「太郎の日記.html」ですね。あ、アイコンがいつものメモ帳と違います！
+        </div>
+      </div>
+      
+      <div style="margin: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: white;">
+        <div style="background-color: #f0f0f0; padding: 5px; border-radius: 5px 5px 0 0; border-bottom: 1px solid #ddd;">
+          📄 太郎の日記.html
+        </div>
+        <div style="padding: 20px;">
+          <h1 style="font-size: 24px; margin-bottom: 20px;">夏祭りの思い出</h1>
+          <p style="margin-bottom: 15px;">昨日、家族で地元の夏祭りに行きました。</p>
+          <p>綿あめがとても美味しかったです。</p>
+        </div>
+      </div>
+      
+      <div class="diagram-container">
+        <div class="mermaid">
+          flowchart LR
+            A["&lt;h1&gt;夏祭りの思い出&lt;/h1&gt;"] -->|ブラウザが解釈| B[大きな見出し]
+            C["&lt;p&gt;昨日、家族で...&lt;/p&gt;"] -->|ブラウザが解釈| D[段落として表示]
+            
+            style A fill:#9575CD,stroke:#9575CD,color:#fff
+            style B fill:#4CAF50,stroke:#4CAF50,color:#fff
+            style C fill:#9575CD,stroke:#9575CD,color:#fff
+            style D fill:#4CAF50,stroke:#4CAF50,color:#fff
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          本当にWebページになってる！僕が書いたコードが画面に出てる！すごいすごい！
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3><span class="emoji-tag">🎯</span> もう一歩進んでみよう - 強調を追加</h3>
+      
+      <h4>大事な部分を目立たせてみよう</h4>
+      
+      <div class="highlight-box">
+        <p><strong>強調タグ（Strong Tag）</strong>：&lt;strong&gt;...&lt;/strong&gt;で囲むことで、その部分を強調（通常は太字）して表示します。</p>
+      </div>
+      
+      <div class="steps">
+        <div class="step">
+          <h4>ステップ1：メモ帳に戻って修正してみよう</h4>
+          <div class="dialog">
+            <div class="dialog-avatar akira-papa">あ</div>
+            <div class="dialog-bubble akira-papa-bubble">
+              メモ帳に戻って、「とても美味しかった」の部分を&lt;strong&gt;で囲んでみてください。
+            </div>
+          </div>
+          
+          <div class="code-block">
+            &lt;h1&gt;夏祭りの思い出&lt;/h1&gt;<br>
+            &lt;p&gt;昨日、家族で地元の夏祭りに行きました。&lt;/p&gt;<br>
+            &lt;p&gt;綿あめが<span class="tag-animation">&lt;strong&gt;とても美味しかった&lt;/strong&gt;</span>です。&lt;/p&gt;
+          </div>
+        </div>
+        
+        <div class="step">
+          <h4>ステップ2：変化を確認しよう</h4>
+          <div style="margin: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: white;">
+            <div style="background-color: #f0f0f0; padding: 5px; border-radius: 5px 5px 0 0; border-bottom: 1px solid #ddd;">
+              📄 太郎の日記.html
+            </div>
+            <div style="padding: 20px;">
+              <h1 style="font-size: 24px; margin-bottom: 20px;">夏祭りの思い出</h1>
+              <p style="margin-bottom: 15px;">昨日、家族で地元の夏祭りに行きました。</p>
+              <p>綿あめが<strong>とても美味しかった</strong>です。</p>
+            </div>
+          </div>
+          
+          <div class="dialog">
+            <div class="dialog-avatar taro">太</div>
+            <div class="dialog-bubble taro-bubble">
+              わあ！「とても美味しかった」の部分が太い文字になってる！
+            </div>
+          </div>
+          
+          <div class="dialog">
+            <div class="dialog-avatar akira-papa">あ</div>
+            <div class="dialog-bubble akira-papa-bubble">
+              その通り！&lt;strong&gt;タグは、文字を太くして強調してくれるんです。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3><span class="emoji-tag">🔧</span> 間違えちゃったときの直し方</h3>
+      
+      <h4>実際に間違えてみよう</h4>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          太郎くん、わざと間違えてみませんか？そうすれば、間違えても怖くなくなります。
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          メモ帳で、&lt;/h1&gt;を消してみてください。つまり、見出しの終わりのタグだけ消すんです。
+        </div>
+      </div>
+      
+      <div class="code-block">
+        &lt;h1&gt;夏祭りの思い出<br>
+        &lt;p&gt;昨日、家族で地元の夏祭りに行きました。&lt;/p&gt;<br>
+        &lt;p&gt;綿あめが&lt;strong&gt;とても美味しかった&lt;/strong&gt;です。&lt;/p&gt;
+      </div>
+      
+      <div style="margin: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: white;">
+        <div style="background-color: #f0f0f0; padding: 5px; border-radius: 5px 5px 0 0; border-bottom: 1px solid #ddd;">
+          📄 太郎の日記.html（エラーあり）
+        </div>
+        <div style="padding: 20px;">
+          <h1 style="font-size: 24px; margin-bottom: 0;">夏祭りの思い出
+          <p style="font-size: 24px; margin-top: 0;">昨日、家族で地元の夏祭りに行きました。</p>
+          <p style="font-size: 16px;">綿あめが<strong>とても美味しかった</strong>です。</p></h1>
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          あれ？なんか変です！全部が大きな文字になっちゃいました！
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          いい観察ですね！実は、HTMLは「ここから始まって、ここで終わる」というルールで動いてるんです。終わりの印がないと、「まだ続いてるのかな？」って思っちゃうんです。
+        </div>
+      </div>
+      
+      <h4>直してみよう</h4>
+      
+      <div class="code-block">
+        &lt;h1&gt;夏祭りの思い出<span class="tag-animation">&lt;/h1&gt;</span><br>
+        &lt;p&gt;昨日、家族で地元の夏祭りに行きました。&lt;/p&gt;<br>
+        &lt;p&gt;綿あめが&lt;strong&gt;とても美味しかった&lt;/strong&gt;です。&lt;/p&gt;
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          直りました！元通りです！間違えても、簡単に直せるでしょう？
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          はい！間違えても全然怖くないですね！むしろ、なぜそうなるのかが分かって面白かったです！
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3><span class="emoji-tag">📚</span> 基本の3つのタグを覚えよう</h3>
+      
+      <h4>今日覚える魔法の言葉</h4>
+      
+      <div class="tag-box">
+        <span class="tag-label">h1タグ</span>
+        <p><strong>大見出しタグ</strong>：&lt;h1&gt;夏祭りの思い出&lt;/h1&gt;</p>
+        <ul>
+          <li>一番大きな見出しを作る</li>
+          <li>ページのタイトルによく使う</li>
+          <li>&lt;h1&gt;で始まって&lt;/h1&gt;で終わる</li>
+        </ul>
+      </div>
+      
+      <div class="tag-box">
+        <span class="tag-label">pタグ</span>
+        <p><strong>段落タグ</strong>：&lt;p&gt;昨日、家族で地元の夏祭りに行きました。&lt;/p&gt;</p>
+        <ul>
+          <li>普通の文章（段落）を作る</li>
+          <li>作文の段落と同じ</li>
+          <li>&lt;p&gt;で始まって&lt;/p&gt;で終わる</li>
+        </ul>
+      </div>
+      
+      <div class="tag-box">
+        <span class="tag-label">strongタグ</span>
+        <p><strong>強調タグ</strong>：&lt;p&gt;綿あめが&lt;strong&gt;とても美味しかった&lt;/strong&gt;です。&lt;/p&gt;</p>
+        <ul>
+          <li>大事な部分を太い文字にする</li>
+          <li>作文で線を引くのと同じ</li>
+          <li>&lt;strong&gt;で始まって&lt;/strong&gt;で終わる</li>
+        </ul>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          たった3つなんですね！これなら覚えられそうです！
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3><span class="emoji-tag">✨</span> 今日の太郎くんの大成功</h3>
+      
+      <div class="highlight-box">
+        <h4>太郎くんの今日の成果</h4>
+        <ul>
+          <li><span class="icon icon-check"></span> <strong>最初のHTMLファイル作成</strong>
+            <ul>
+              <li>メモ帳でHTMLコードを書いた</li>
+              <li>.htmlという拡張子で保存できた</li>
+            </ul>
+          </li>
+          <li><span class="icon icon-check"></span> <strong>ブラウザでの表示成功</strong>
+            <ul>
+              <li>自分のコードがWebページになった</li>
+              <li>修正→保存→確認のサイクルを覚えた</li>
+            </ul>
+          </li>
+          <li><span class="icon icon-check"></span> <strong>3つの基本タグをマスター</strong>
+            <ul>
+              <li>h1（見出し）、p（段落）、strong（強調）</li>
+              <li>それぞれの役割と使い方を理解</li>
+            </ul>
+          </li>
+          <li><span class="icon icon-check"></span> <strong>エラー対処の体験</strong>
+            <ul>
+              <li>わざと間違えて、直すことができた</li>
+              <li>間違いを恐れない心を身につけた</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      
+      <h3><span class="emoji-tag">🎨</span> 次回への大きな期待</h3>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          あきらパパ、今日作ったページは動きますが、なんだか地味じゃないですか？
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          実は、太郎くんが今感じてることは、とても大切な気づきなんです。HTMLは「何を書くか」を決める言語。でも、「どう見せるか」は別の魔法があるんです。
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar taro">太</div>
+        <div class="dialog-bubble taro-bubble">
+          別の魔法？
+        </div>
+      </div>
+      
+      <div class="dialog">
+        <div class="dialog-avatar akira-papa">あ</div>
+        <div class="dialog-bubble akira-papa-bubble">
+          そう！CSSっていう魔法です。HTMLが骨組みなら、CSSは洋服やお化粧みたいなものですね。
+        </div>
+      </div>
+      
+      <div class="diagram-container">
+        <div class="mermaid">
+          flowchart LR
+            A[HTML] -->|構造を作る| B((Webページ))
+            C[CSS] -->|見た目を飾る| B
+            
+            style A fill:#9575CD,stroke:#9575CD,color:#fff
+            style B fill:#4CAF50,stroke:#4CAF50,color:#fff
+            style C fill:#E91E63,stroke:#E91E63,color:#fff
+        </div>
+      </div>
+      
+      <div style="margin: 20px; display: flex; justify-content: space-between;">
+        <div style="width: 48%; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: white;">
+          <h5 style="text-align: center;">今日作ったページ（HTMLのみ）</h5>
+          <div style="padding: 20px;">
+            <h1 style="font-size: 24px; margin-bottom: 20px;">夏祭りの思い出</h1>
+            <p style="margin-bottom: 15px;">昨日、家族で地元の夏祭りに行きました。</p>
+            <p>綿あめが<strong>とても美味しかった</strong>です。</p>
+          </div>
+        </div>
+        <div style="width: 48%; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: #f8f2e6;">
+          <h5 style="text-align: center;">次回のページ（HTML+CSS）</h5>
+          <div style="padding: 20px;">
+            <h1 style="font-size: 28px; margin-bottom: 20px; color: #3F77BF; text-align: center; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">🌟 夏祭りの思い出 🌟</h1>
+            <p style="margin-bottom: 15px; font-family: sans-serif; line-height: 1.8;">昨日、家族で地元の夏祭りに行きました。</p>
+            <p style="font-family: sans-serif; line-height: 1.8;">綿あめが<strong style="color: #E91E63;">とても美味しかった</strong>です。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h3><span class="emoji-tag">📚</span> 今日覚えた大切な言葉</h3>
+      
+      <div class="comparison-table">
+        <table>
+          <tr>
+            <th>用語</th>
+            <th>説明</th>
+          </tr>
+          <tr>
+            <td>HTMLタグ</td>
+            <td>文書の各部分に意味を付ける印（&lt;h1&gt;、&lt;p&gt;、&lt;strong&gt;）</td>
+          </tr>
+          <tr>
+            <td>開始タグと終了タグ</td>
+            <td>&lt;h1&gt;で始まって&lt;/h1&gt;で終わるペア</td>
+          </tr>
+          <tr>
+            <td>拡張子</td>
+            <td>ファイル名の最後の「.html」でファイルの種類を表す</td>
+          </tr>
+          <tr>
+            <td>ブラウザ</td>
+            <td>HTMLファイルをWebページとして表示するソフト</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    <footer>
+      <p>次回 → CSSって見た目を決める魔法です【color, font-size, background】</p>
+      <p>© 2025 あきらパパの「対話で学ぼう！HTML/CSS入門」</p>
+    </footer>
+  </div>
+</body>
+</html>
